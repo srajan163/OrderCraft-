@@ -1,0 +1,53 @@
+.form-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 6px;
+  font-size: 14px;
+}
+
+button {
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #2a8cff;
+  color: #fff;
+  border: none;
+}
+
+.btn-secondary {
+  background: #777;
+  color: #fff;
+  border: none;
+}
+
+.btn-edit {
+  background: orange;
+  color: #fff;
+  margin-right: 5px;
+  border: none;
+  padding: 4px 8px;
+}
+
+.btn-delete {
+  background: red;
+  color: #fff;
+  border: none;
+  padding: 4px 8px;
+}
+
+.category-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.category-table th,
+.category-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}

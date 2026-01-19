@@ -1,0 +1,340 @@
+/* .track-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding: 1rem 2rem;
+}
+
+.form-card,
+.status-card,
+.timeline-card,
+.cancelled-card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.track-btn {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.status-card .status-text {
+  font-weight: bold;
+  color: #007acc;
+  text-transform: uppercase;
+}
+
+.progress-bar-container {
+  position: relative;
+  margin-top: 1.5rem;
+  padding: 2rem 0;
+}
+
+.progress-line {
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background-color: #cfd8dc;
+  border-radius: 3px;
+}
+
+.progress-bar-fill {
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  height: 6px;
+  background-color: #4caf50;
+  border-radius: 3px;
+  z-index: 1;
+  transition: width 0.5s ease;
+}
+
+.truck-icon {
+  position: absolute;
+  top: -15px;
+  transform: translateX(-50%);
+  transition: left 0.5s ease;
+  z-index: 2;
+}
+
+.truck-icon img {
+  width: 50px;
+  height: auto;
+}
+
+.milestones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.milestone {
+  text-align: center;
+}
+ 
+
+.milestone-label {
+  font-size: 0.85rem;
+  color: #455a64;
+  display: inline-block;
+  width: 80px;
+}
+
+.timeline-card .timeline-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.scroll-icon {
+  color: #1976d2;
+}
+ 
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
+
+.timeline-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.marker-icon {
+  font-size: 1.2rem;
+}
+ 
+
+.timeline-line {
+  width: 2px;
+  height: 100%;
+  background-color: #b0bec5;
+  margin-top: 2px;
+}
+
+.timeline-content {
+  background-color: #eceff1;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  align-items: center;
+}
+
+.timeline-status {
+  font-weight: 600;
+  color: #263238;
+}
+
+.timeline-time {
+  font-size: 0.8rem;
+  color: #607d8b;
+  margin-top: 4px;
+}
+
+.cancelled-card {
+  background-color: #ffebee;
+  border-left: 5px solid #d32f2f;
+  margin-top: 20px;
+  padding: 16px;
+}
+
+.cancelled-text {
+  color: #b71c1c;
+  font-weight: bold;
+  text-align: center;
+}
+
+mat-error {
+  color: #d32f2f;
+  margin-top: 0.5rem;
+  font-weight: 500;
+} */
+
+.track-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding: 1rem 2rem;
+}
+
+.form-card,
+.status-card,
+.timeline-card,
+.cancelled-card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.full-width {
+  width: 100%;
+}
+ 
+
+.track-btn {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.status-card .status-text {
+  font-weight: bold;
+  color: #007acc;
+  text-transform: uppercase;
+}
+
+.status-card .status-text.cancelled {
+  color: #d32f2f;
+}
+ 
+
+.progress-bar-container {
+  position: relative;
+  margin-top: 1.5rem;
+  padding: 2rem 0;
+}
+
+.progress-line {
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background-color: #cfd8dc;
+  border-radius: 3px;
+}
+
+.progress-bar-fill {
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  height: 6px;
+  background-color: #4caf50;
+  border-radius: 3px;
+  z-index: 1;
+  transition: width 0.5s ease;
+}
+
+.truck-icon {
+  position: absolute;
+  top: -15px;
+  transform: translateX(-50%);
+  transition: left 0.5s ease;
+  z-index: 2;
+}
+
+.truck-icon img {
+  width: 50px;
+  height: auto;
+}
+
+.milestones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.milestone {
+  text-align: center;
+}
+ 
+
+.milestone-label {
+  font-size: 0.85rem;
+  color: #455a64;
+  display: inline-block;
+  width: 80px;
+}
+
+.timeline-card .timeline-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.scroll-icon {
+  color: #1976d2;
+}
+ 
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
+
+.timeline-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.marker-icon {
+  font-size: 1.2rem;
+}
+ 
+
+.timeline-line {
+  width: 2px;
+  height: 100%;
+  background-color: #b0bec5;
+  margin-top: 2px;
+}
+
+.timeline-content {
+  background-color: #eceff1;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  align-items: center;
+}
+
+.timeline-status {
+  font-weight: 600;
+  color: #263238;
+}
+
+.timeline-time {
+  font-size: 0.8rem;
+  color: #607d8b;
+  margin-top: 4px;
+}
+
+.cancelled-card {
+  background-color: #ffebee;
+  border-left: 5px solid #d32f2f;
+  margin-top: 20px;
+  padding: 16px;
+}
+
+.cancelled-text {
+  color: #b71c1c;
+  font-weight: bold;
+  text-align: center;
+}
+

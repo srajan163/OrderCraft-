@@ -1,0 +1,224 @@
+/* Make this component fill the available height (works in Angular component styles) */
+:host {
+  display: block;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Root layout fills the page height and allocates space to panels */
+.layout {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 320px 1fr; /* slightly narrower left panel to fit more */
+  gap: 16px;
+  align-items: stretch;
+  min-height: 0; /* allow children to shrink for overflow scrolling */
+}
+
+/* Panels are flex columns so we can put scroll on inner content cleanly */
+.panel {
+  background: #fff;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  padding: 14px; /* tighter padding */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* IMPORTANT for internal scroll areas */
+}
+
+/* Right side should be allowed to grow and scroll inside */
+.grow {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Optional: wrap long sections inside the right panel to scroll */
+.scroll-area {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+/* ----- Forms ----- */
+.form {
+  display: grid;
+  gap: 12px;
+}
+
+.form label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.95rem;
+}
+
+.form input[type="date"],
+.form input[type="text"],
+.form input[type="number"] {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form input:focus {
+  border-color: #7aa7ff;
+  box-shadow: 0 0 0 3px rgba(122,167,255,0.15);
+}
+
+.actions { margin-top: 8px; }
+.error { color: #b00020; margin-top: 8px; }
+
+/* ----- Status summary ----- */
+.status-summary {
+  background: #f8f8f8;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+}
+
+.status-summary h3 {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.status-summary .legend {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 0.92rem;
+}
+
+/* ----- Header & filters ----- */
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filters input[type="number"] {
+  width: 160px;
+  padding: 6px 8px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.filters button {
+  padding: 6px 10px;
+  border: 1px solid #cfcfcf;
+  border-radius: 6px;
+  background: #f7f7f7;
+  cursor: pointer;
+}
+.filters button:hover { background: #efefef; }
+
+/* ----- Table ----- */
+/* Wrap your table in a .table-wrap inside the right panel to enable inner scrolling */
+.table-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;             /* inner scroll instead of whole page */
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;  /* needed to keep sticky header above borders */
+  border-spacing: 0;
+  font-size: 0.95rem;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  background: #fbfbfb;
+  z-index: 2;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th,
+.table td {
+  border-bottom: 1px solid #eee;
+  border-right: 1px solid #eee;
+  padding: 10px;
+  text-align: left;
+  white-space: nowrap;       /* keep cells compact; remove if you want wrapping */
+}
+
+.table th:first-child,
+.table td:first-child { border-left: 1px solid #eee; }
+.table tbody tr:hover { background: #fafcff; }
+
+/* ----- Status badges ----- */
+.badge {
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  border: 1px solid transparent;
+}
+.badge.pending { background: #fff4d6; color: #8a5b00; border-color: #ffe2a1; }
+.badge.partial { background: #e6f2ff; color: #004b7c; border-color: #cfe6ff; }
+.badge.paid    { background: #e8fbea; color: #0b6c24; border-color: #c4f1cb; }
+
+/* Subtle left marker per status */
+tr.status-pending  td:first-child { border-left: 4px solid #ffc04d; }
+tr.status-partial  td:first-child { border-left: 4px solid #64b5f6; }
+tr.status-paid     td:first-child { border-left: 4px solid #66bb6a; }
+
+/* ----- Pay cell ----- */
+.paycell {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.paycell input[type="number"] {
+  width: 110px;
+  padding: 6px 8px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.paycell button {
+  padding: 6px 10px;
+  border: 1px solid #cfcfcf;
+  border-radius: 6px;
+  background: #f7f7f7;
+  cursor: pointer;
+}
+.paycell button:hover { background: #efefef; }
+
+button.danger {
+  background: #ffebee;
+  border: 1px solid #e57373;
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+button.danger:hover { background: #ffd7dc; }
+
+/* ----- Responsive ----- */
+@media (max-width: 980px) {
+  .layout {
+    grid-template-columns: 1fr;
+    height: auto; /* allow natural height when stacked */
+  }
+  .table th, .table td { white-space: normal; } /* allow wrapping on small screens */
+}

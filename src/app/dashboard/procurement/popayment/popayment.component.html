@@ -1,0 +1,35 @@
+
+<!-- payment procurment to supplier -->
+
+<div class="payment-container">
+  <h2>Order Payment</h2>
+
+  <form [formGroup]="paymentForm" (ngSubmit)="makePayment()">
+    <input
+      type="number"
+      formControlName="orderId"
+      placeholder="Enter Order ID"
+    />
+    <div *ngIf="paymentForm.controls['orderId'].invalid && paymentForm.controls['orderId'].touched">
+      <small class="error">Order ID is required and must be positive.</small>
+    </div>
+
+    <select formControlName="paymentMethod">
+      <option value="" disabled>Select Payment Method</option>
+      <option value="Credit Card">Credit Card</option>
+      <option value="Debit Card">Debit Card</option>
+      <option value="UPI">UPI</option>
+      <option value="Net Banking">Net Banking</option>
+      <option value="Cash on Delivery">Cash on Delivery</option>
+    </select>
+    <div *ngIf="paymentForm.controls['paymentMethod'].invalid && paymentForm.controls['paymentMethod'].touched">
+      <small class="error">Payment method is required.</small>
+    </div>
+
+    <button type="submit">Pay</button>
+  </form>
+
+  <p *ngIf="message" [ngClass]="{ success: isSuccess, error: !isSuccess }">
+    {{ message }}
+  </p>
+</div>

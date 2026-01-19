@@ -1,0 +1,8 @@
+:host {
+  display: block;
+}
+ 
+video {
+  max-height: 450px;
+}
+ 

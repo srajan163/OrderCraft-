@@ -1,0 +1,119 @@
+
+<div class="track-container">
+  <mat-card class="form-card">
+    <h2 align="center">📦 Track Purchase Order</h2>
+ 
+    <div *ngIf="orderId" style="text-align:center; margin-bottom: 1rem;">
+      <strong>Tracking Order ID: {{ orderId }}</strong>
+    </div>
+
+    <form [formGroup]="trackForm" (ngSubmit)="trackOrder()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Enter Purchase Order ID</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="inputOrderId"
+          placeholder="e.g. 101"
+        />
+        <button
+          *ngIf="inputOrderId?.value"
+          mat-icon-button
+          matSuffix
+          (click)="inputOrderId?.reset()"
+          aria-label="Clear"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+
+        <!-- ✅ Client-side validation errors -->
+        <mat-error *ngIf="inputOrderId?.hasError('required') && inputOrderId?.touched">
+          Purchase Order ID is required
+        </mat-error>
+        <mat-error *ngIf="inputOrderId?.hasError('min') && inputOrderId?.touched">
+          Order ID must be greater than 0
+        </mat-error>
+      </mat-form-field>
+
+      <!-- ✅ Server-side error -->
+      <mat-error *ngIf="serverError">{{ serverError }}</mat-error>
+ 
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="track-btn"
+        type="submit"
+      >
+        Track Order
+      </button>
+    </form>
+  </mat-card>
+
+  <!-- Show current status -->
+  <mat-card class="status-card" *ngIf="currentStatus">
+    <h3 align="center">
+      📌 Current Status:
+      <span class="status-text" [ngClass]="{ 'cancelled': isCancelled }">
+        {{ currentStatus }}
+      </span>
+    </h3>
+  </mat-card>
+
+  <!-- Cancelled Message -->
+  <mat-card class="cancelled-card" *ngIf="isCancelled">
+    <h3 class="cancelled-text">
+      ❌ This order has been cancelled. No further tracking available.
+    </h3>
+  </mat-card>
+
+  <!-- Progress bar only if not cancelled -->
+  <mat-card class="status-card" *ngIf="!isCancelled && currentStatus">
+    <div class="progress-bar-container">
+      <div class="progress-line"></div>
+
+      <div class="progress-bar-fill" [style.width.%]="progressPercent"></div>
+ 
+
+      <div
+        class="truck-icon"
+        [style.left.%]="progressPercent"
+        aria-label="Truck Progress"
+      >
+        <img src="/assets/truck.png" alt="Truck" class="truck-img" />
+      </div>
+
+      <div class="milestones">
+        <div *ngFor="let stage of statusStages" class="milestone">
+          <span class="milestone-label">{{ stage }}</span>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- Timeline only if not cancelled -->
+  <mat-card class="timeline-card" *ngIf="!isCancelled && statusHistory?.length">
+    <h3 class="timeline-header">
+      <mat-icon class="scroll-icon">description</mat-icon>
+      Status History
+    </h3>
+
+    <div class="timeline">
+      <div
+        *ngFor="let entry of statusHistory; let last = last"
+        class="timeline-item"
+      >
+        <div class="timeline-marker">
+          <mat-icon class="marker-icon" color="primary">check_circle</mat-icon>
+          <div *ngIf="!last" class="timeline-line"></div>
+        </div>
+
+        <div class="timeline-content">
+          <div class="timeline-status">{{ entry.status }}</div>
+          <div class="timeline-time">{{ entry.time }}</div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
+

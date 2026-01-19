@@ -1,0 +1,16 @@
+.production-page { padding: 18px; }
+.page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.title { font-size:1.25rem; margin:0; color:#111827; }
+.btn-primary { background:#2563eb; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; }
+
+.detail-card { background:white; padding:12px; border-radius:8px; box-shadow:0 6px 18px rgba(15,23,42,0.06); }
+.stage-row { display:flex; gap:12px; padding:10px 8px; border-bottom:1px solid #eef2ff; align-items:flex-start; }
+.stage-left { min-width:200px; }
+.stage-status { font-weight:700; padding:6px 10px; border-radius:12px; display:inline-block; background:#f1f5f9; color:#0f172a; }
+.stage-meta { color:#475569; font-size:0.9rem; margin-top:6px; }
+.stage-right { flex:1; color:#0f172a; }
+.stage-time { font-size:0.95rem; font-weight:600; }
+.stage-remarks { margin-top:6px; color:#475569; }
+.empty { padding:20px; text-align:center; color:#475569; }
+.loading, .error { padding:12px; margin-bottom:8px; border-radius:8px; }
+.error { background:#fff1f2; color:#991b1b; }

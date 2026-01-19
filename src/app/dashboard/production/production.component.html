@@ -1,0 +1,240 @@
+ <!-- Production Dashboard  -->
+ 
+
+
+<header class="topbar">
+  <div class="logo-area">
+    <img src="/assets/logo.png" alt="Logo" class="logo" />
+    <div class="logo-text">
+      <h1>OrderCraft</h1>
+      <span>Production Dashboard</span>
+    </div>
+  </div>
+ 
+  <div class="actions">
+    <div class="notification-wrapper">
+      <button class="icon-btn" title="Notifications">
+        <i class="fas fa-bell"></i>
+        <span class="notif-badge">3</span>
+      </button>
+    </div>
+    <button
+      class="icon-btn"
+      title="Profile"
+      (click)="goToProfile()"
+      [attr.aria-label]="'Profile'">
+      <i class="fas fa-user" aria-hidden="true"></i>
+    </button>
+
+ 
+    <button class="icon-btn" title="Settings">
+      <i class="fas fa-cog"></i>
+    </button>
+ 
+    <button class="btn logout" (click)="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+      Logout
+    </button>
+  </div>
+</header>
+ 
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+ 
+  <!-- Welcome -->
+  <div class="mb-8">
+    <h2 class="title">Welcome Production Manager</h2>
+    <p class="subtitle">Here’s what’s happening on the production floor today.</p>
+  </div>
+   <!-- Quick Actions -->
+  <section class="card quick-actions-card mb-6">
+    <h3 class="card-title">Quick Actions</h3>
+ 
+    <div class="quick-actions-grid">
+ 
+      <!-- Start New Batch -->
+      <button class="action-card" (click)="goToSchedule()">
+        <div class="action-icon">➕</div>
+        <div class="action-body">
+          <div class="action-title">Start New Batch</div>
+          <div class="action-sub">Begin a production cycle</div>
+        </div>
+      </button>
+ 
+      <!-- Monitor Production -->
+      <button class="action-card" (click)="openAnalytics()">
+        <div class="action-icon">📊</div>
+        <div class="action-body">
+          <div class="action-title">Monitor Production</div>
+          <div class="action-sub">View live production status</div>
+        </div>
+      </button>
+
+      
+     
+ 
+      <!-- Generate Report -->
+      <div class="action-card report-container" (click)="toggleDropdown()">
+        <div class="action-icon">📝</div>
+        <div class="action-body">
+          <div class="action-title">Generate Report</div>
+          <div class="action-sub">Export production summary</div>
+        </div>
+
+       
+ 
+        <!-- Dropdown -->
+        <div *ngIf="dropdownOpen" class="dropdown-report" (click)="$event.stopPropagation()">
+          <button (click)="generateReport('pdf')">📄 PDF</button>
+          <button (click)="generateReport('excel')">📊 Excel</button>
+        </div>
+      </div>
+ 
+    </div>
+  </section>
+    <!-- Production Orders Table -->
+  <section class="card users-card mb-6">
+    <div class="users-header">
+      <h3 class="card-title">Active Production Orders</h3>
+      <button class="btn ghost" (click)="refreshSchedules()">Refresh</button>
+    </div>
+ 
+    <div class="table-wrap">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Status</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Deadline</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="loading">
+            <td colspan="8" class="text-center">Loading schedules...</td>
+          </tr>
+ 
+          <tr *ngIf="error && !loading">
+            <td colspan="8" class="text-center">{{ error }}</td>
+          </tr>
+ 
+          <tr *ngFor="let s of schedules">
+            <td>#{{ s.psId }}</td>
+            <td>{{ s.product?.productsName }}</td>
+            <td>{{ s.psQuantity }}</td>
+            <td>
+              <span
+                [ngClass]="{
+                  'role-production': s.status === 'CREATED',
+                  'role-inventory': s.status === 'DONE',
+                  'role-admin': s.status === 'CANCELLED'
+                }">
+                {{ s.status }}
+              </span>
+            </td>
+            <td>{{ s.psStartDate }}</td>
+            <td>{{ s.psEndDate || '-' }}</td>
+ 
+            <td class="deadline-cell">
+              <!-- View mode -->
+              <div *ngIf="!editingDeadline[s.psId]" class="deadline-view">
+                <span class="deadline-text">{{ s.psDeadline || '—' }}</span>
+                <button mat-icon-button color="primary" (click)="enableDeadlineEdit(s.psId)" matTooltip="Edit Deadline">
+                  <mat-icon>edit</mat-icon>
+                   <!-- <lucide-icon name="pencil"></lucide-icon> -->
+                </button>
+              </div>
+ 
+              <!-- Edit mode -->
+              <div *ngIf="editingDeadline[s.psId]" class="deadline-edit">
+                <mat-form-field appearance="fill" class="deadline-field">
+                  <mat-label>Deadline</mat-label>
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDeadlines[s.psId]" />
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+ 
+                <div class="deadline-buttons">
+                  <button mat-mini-fab color="accent" (click)="saveDeadline(s.psId)" matTooltip="Save">
+                    <mat-icon>check</mat-icon>
+                     <!-- <lucide-icon name="check"></lucide-icon> -->
+
+                  </button>
+                  <button mat-mini-fab color="warn" (click)="editingDeadline[s.psId]=false" matTooltip="Cancel">
+                    <mat-icon>close</mat-icon>
+                     <!-- <lucide-icon name="x"></lucide-icon> -->
+
+                  </button>
+                </div>
+              </div>
+            </td>
+ 
+            <td>
+              <button class="link edit" (click)="markDone(s.psId)">Mark Done</button>
+              <button class="link delete" (click)="cancel(s.psId)">Cancel</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+ 
+    <div class="text-center mt-6">
+      <button class="btn ghost">See All Orders</button>
+    </div>
+  </section>
+ 
+ 
+  <!-- Production Units -->
+  <section class="card activities mb-6">
+    <h3 class="card-title">Production Units</h3>
+ 
+    <div class="space-y" *ngIf="units && units.length > 0; else noUnits">
+      <div class="activity-row" *ngFor="let unit of units">
+        <div class="activity-icon">🏭</div>
+        <div class="activity-texts">
+          <div class="activity-title">{{ unit.unitName }}</div>
+          <div class="activity-subtitle">
+            Category: {{ unit.category?.categoryName }} |
+            Capacity: {{ unit.capacity }} |
+            Status:
+            <span [class.available]="unit.available" [class.unavailable]="!unit.available"
+                  [ngStyle]="{'color': unit.available ? '#16a34a' : '#dc2626', 'font-weight': '600'}">
+              {{ unit.available ? 'Available' : 'Unavailable' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <ng-template #noUnits>
+      <p class="text-center" style="color: var(--muted)">No production units available.</p>
+    </ng-template>
+  </section>
+ 
+ 
+ 
+ 
+ 
+  <!-- Production Analytics Modal -->
+  <div class="modal-backdrop" *ngIf="showAnalytics" (click)="closeAnalytics()"></div>
+ 
+  <div class="modal" *ngIf="showAnalytics">
+    <div class="modal-header">
+      <h2>Production Analytics</h2>
+      <button class="close-btn" (click)="closeAnalytics()">✖</button>
+    </div>
+    <div class="modal-body">
+      <app-production-analytics></app-production-analytics>
+    </div>
+  </div>
+ 
+  <!-- Router Outlet -->
+  <section class="timeline-section">
+    <router-outlet></router-outlet>
+  </section>
+</main>
+ 
+ 

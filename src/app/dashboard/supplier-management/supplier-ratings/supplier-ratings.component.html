@@ -1,0 +1,55 @@
+<div class="container">
+  <h1>Supplier Ratings</h1>
+
+  <!-- Filter -->
+  <div class="filter">
+    <input type="number" placeholder="Filter by Supplier ID" [(ngModel)]="supplierFilter">
+    <button (click)="loadRatings()">Search</button>
+    <button (click)="supplierFilter=null; loadRatings()">Reset</button>
+  </div>
+
+  <!-- Add New Rating -->
+  <div class="form">
+    <h3>Add New Rating</h3>
+    <input type="number" placeholder="Supplier ID" [(ngModel)]="newRating.supplierId">
+    <input type="text" placeholder="Review" [(ngModel)]="newRating.review">
+    <input type="text" placeholder="Answers (comma separated)" 
+           (change)="newRating.answers = $any($event.target).value.split(',').map(Number)">
+    <button (click)="addRating()">Add Rating</button>
+  </div>
+
+  <!-- Ratings Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Supplier ID</th>
+        <th>Rating</th>
+        <th>Review</th>
+        <th>Created</th>
+        <th>Updated</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of ratings">
+        <td>{{r.id}}</td>
+        <td>{{r.supplierId}}</td>
+        <td>{{r.rating}}</td>
+        <td>{{r.review}}</td>
+        <td>{{r.createdAt}}</td>
+        <td>{{r.updatedAt}}</td>
+        <td>
+          <button class="delete-btn" (click)="deleteRating(r.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="page===0">Prev</button>
+    <span>Page {{page + 1}}</span>
+    <button (click)="nextPage()">Next</button>
+  </div>
+</div>

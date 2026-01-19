@@ -1,0 +1,188 @@
+
+<div class="register-container">
+<h2 class="title">User Registration</h2>
+ 
+  <!-- Validation summary -->
+<div
+
+    class="validation-summary"
+
+    *ngIf="showValidationSummary && getAllErrors().length > 0"
+>
+<mat-icon>error</mat-icon>
+<div>
+<div *ngFor="let err of getAllErrors()">{{ err }}</div>
+</div>
+<button class="close-btn" (click)="dismissSummary()">✕</button>
+</div>
+ 
+  <mat-stepper
+
+    [orientation]="stepperOrientation"
+
+    (selectionChange)="onStepChange($event)"
+
+    linear
+>
+<!-- Step 1 - Basic Information -->
+<mat-step [stepControl]="basicInfoForm">
+<form [formGroup]="basicInfoForm">
+<ng-template matStepLabel>Basic Information</ng-template>
+ 
+        <!-- Full Name -->
+<mat-form-field appearance="outline" class="full-width">
+<mat-label>Full Name</mat-label>
+<input matInput formControlName="userFullName" />
+<mat-error *ngIf="basicInfoForm.get('userFullName')?.hasError('required')">
+
+            Full name is required.
+</mat-error>
+<mat-error *ngIf="basicInfoForm.get('userFullName')?.hasError('pattern')">
+
+            Must start with a letter and contain only letters/spaces.
+</mat-error>
+</mat-form-field>
+ 
+        <!-- Username -->
+<mat-form-field appearance="outline" class="full-width">
+<mat-label>Username</mat-label>
+<input matInput formControlName="userName" />
+<mat-error *ngIf="basicInfoForm.get('userName')?.hasError('required')">
+
+            Username is required.
+</mat-error>
+<mat-error *ngIf="basicInfoForm.get('userName')?.hasError('minlength')">
+
+            Username must be at least 3 characters.
+</mat-error>
+<mat-error *ngIf="basicInfoForm.get('userName')?.hasError('pattern')">
+
+            Must start with a letter and may contain letters, numbers, or underscores.
+</mat-error>
+</mat-form-field>
+ 
+        <!-- Email -->
+<mat-form-field appearance="outline" class="full-width">
+<mat-label>Email</mat-label>
+<input matInput formControlName="userEmail" />
+<mat-error *ngIf="basicInfoForm.get('userEmail')?.hasError('required')">
+
+            Email is required.
+</mat-error>
+<mat-error *ngIf="basicInfoForm.get('userEmail')?.hasError('email')">
+
+            Please enter a valid email address.
+</mat-error>
+</mat-form-field>
+ 
+        <!-- Mobile -->
+<mat-form-field appearance="outline" class="full-width">
+<mat-label>Mobile</mat-label>
+<input matInput formControlName="userMobile" />
+<mat-error *ngIf="basicInfoForm.get('userMobile')?.hasError('required')">
+
+            Mobile number is required.
+</mat-error>
+<mat-error *ngIf="basicInfoForm.get('userMobile')?.hasError('pattern')">
+
+            Must be exactly 10 digits.
+</mat-error>
+</mat-form-field>
+ 
+        <!-- Profile Image -->
+<mat-form-field appearance="outline" class="full-width">
+<mat-label>Profile Image URL</mat-label>
+<input matInput formControlName="userProfileImg" />
+</mat-form-field>
+ 
+        <div class="step-actions">
+<button mat-raised-button color="primary" matStepperNext>
+
+            Next
+</button>
+</div>
+</form>
+</mat-step>
+ 
+    <!-- Step 2 - Role -->
+<mat-step [stepControl]="roleControl">
+<form [formGroup]="registerForm">
+<ng-template matStepLabel>Select Role</ng-template>
+ 
+        <mat-form-field appearance="outline" class="full-width">
+<mat-label>Role</mat-label>
+<mat-select formControlName="role">
+<mat-option *ngFor="let r of roles" [value]="r">
+
+              {{ r.roleName }}
+</mat-option>
+</mat-select>
+<mat-error *ngIf="roleControl.hasError('required')">
+
+            Please select a role.
+</mat-error>
+</mat-form-field>
+ 
+        <div class="step-actions">
+<button mat-button matStepperPrevious>Back</button>
+<button mat-raised-button color="primary" matStepperNext>
+
+            Next
+</button>
+</div>
+</form>
+</mat-step>
+ 
+    <!-- Step 3 - Address -->
+<mat-step [stepControl]="addressForm">
+<form [formGroup]="addressForm">
+<ng-template matStepLabel>Address</ng-template>
+ 
+        <!-- Street -->
+<mat-form-field appearance="outline" class="full-width">
+<mat-label>Street</mat-label>
+<input matInput formControlName="addressStreet" />
+</mat-form-field>
+ 
+        <!-- City -->
+<mat-form-field appearance="outline" class="full-width">
+<mat-label>City</mat-label>
+<input matInput formControlName="addressCity" />
+</mat-form-field>
+ 
+        <!-- State -->
+<mat-form-field appearance="outline" class="full-width">
+<mat-label>State</mat-label>
+<input matInput formControlName="addressState" />
+</mat-form-field>
+ 
+        <!-- Postal Code -->
+<mat-form-field appearance="outline" class="full-width">
+<mat-label>Postal Code</mat-label>
+<input matInput formControlName="addressPostalCode" />
+<mat-error *ngIf="addressForm.get('addressPostalCode')?.hasError('pattern')">
+
+            Postal code must be 6 digits.
+</mat-error>
+</mat-form-field>
+ 
+        <!-- Country -->
+<mat-form-field appearance="outline" class="full-width">
+<mat-label>Country</mat-label>
+<input matInput formControlName="addressCountry" />
+</mat-form-field>
+ 
+        <div class="step-actions">
+<button mat-button matStepperPrevious>Back</button>
+<button mat-raised-button color="accent" (click)="onSubmit()">
+
+            Register
+</button>
+</div>
+</form>
+</mat-step>
+</mat-stepper>
+</div>
+
+ 
+

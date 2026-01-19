@@ -1,0 +1,167 @@
+
+/* Container with gradient and hover effect */
+.update-user-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2.5rem 3rem;
+  background: linear-gradient(145deg, #ffffff, #f0f4ff);
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  transition: all 0.3s ease;
+}
+ 
+.update-user-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+ 
+/* Heading with gradient text */
+.update-user-container h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #1976d2, #1abc9c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  margin-bottom: 24px;
+}
+ 
+/* Labels */
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  user-select: none;
+
+  position: relative;
+}
+ 
+/* Input container for gradient underline */
+
+input[type='text'],
+input[type='email'] {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+
+  border: none;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+ 
+/* Hover effect for input */
+input[type='text']:hover,
+input[type='email']:hover {
+  border-bottom-color: #1abc9c;
+}
+ 
+/* Gradient underline on focus */
+input[type='text']:focus,
+input[type='email']:focus {
+  outline: none;
+  border-bottom: 2px solid transparent;
+  background-image: linear-gradient(90deg, #1976d2, #1abc9c);
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  background-size: 0% 2px;
+  animation: underlineExpand 0.4s forwards;
+}
+ 
+/* Gradient animation keyframes */
+@keyframes underlineExpand {
+  0% {
+    background-size: 0% 2px;
+  }
+  100% {
+    background-size: 100% 2px;
+  }
+}
+ 
+
+/* Read-only role input */
+input[readonly] {
+  background-color: #f5f5f5;
+  color: #555;
+  cursor: not-allowed;
+
+  border-bottom: 2px solid #ccc;
+}
+ 
+/* Error messages */
+.error {
+  color: #d32f2f;
+
+  font-size: 0.85rem;
+  margin-top: -12px;
+  margin-bottom: 12px;
+}
+
+/* Buttons container */
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 12px;
+  margin-top: 20px;
+}
+ 
+/* Buttons with gradient */
+button {
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+ 
+/* Submit button gradient */
+button[type='submit'] {
+  background: linear-gradient(135deg, #1976d2, #1abc9c);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+}
+ 
+button[type='submit']:hover {
+  background: linear-gradient(135deg, #115293, #16a085);
+  box-shadow: 0 6px 16px rgba(17, 82, 147, 0.4);
+  transform: translateY(-2px);
+}
+ 
+/* Cancel button gradient */
+button[type='button'] {
+  background: linear-gradient(135deg, #e0e0e0, #bdbdbd);
+  color: #333;
+}
+ 
+button[type='button']:hover {
+  background: linear-gradient(135deg, #bdbdbd, #9e9e9e);
+  transform: translateY(-2px);
+}
+ 
+/* Responsive */
+@media (max-width: 600px) {
+  .update-user-container {
+    padding: 1.5rem 2rem;
+    margin: 1rem;
+  }
+ 
+
+  .form-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+

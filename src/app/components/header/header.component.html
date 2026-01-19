@@ -1,0 +1,28 @@
+<header class="bg-white shadow-sm border-b border-slate-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center justify-between">
+     
+      <!-- Left side: Icon + Titles -->
+      <div class="flex items-center space-x-3">
+        <div class="bg-blue-600 p-2 rounded-lg">
+          <lucide-angular [img]="icon" class="w-8 h-8 text-white"></lucide-angular>
+        </div>
+        <div>
+          <h1 class="text-2xl font-bold text-slate-800">{{ title }}</h1>
+          <p class="text-sm text-slate-500">{{ subtitle }}</p>
+          <p *ngIf="roleName" class="text-xs text-blue-600 font-medium">
+            {{ roleName }}
+          </p>
+        </div>
+      </div>
+ 
+      <!-- Right side: Login / Profile -->
+      <!-- <a
+        routerLink="/login"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      >
+        Login to Access System
+      </a> -->
+    </div>
+  </div>
+</header>

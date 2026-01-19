@@ -1,0 +1,207 @@
+/* =========================================
+   TIMELINE SECTION — MODERN DASHBOARD STYLE
+   ========================================= */
+
+.timeline-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+/* --- Timeline Card Container --- */
+.timeline-card {
+  background: linear-gradient(135deg, #ffffff, #f3f6ff);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(13, 27, 42, 0.08);
+  padding: 1rem;
+  overflow-x: auto;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+}
+
+.timeline-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 35px rgba(13, 27, 42, 0.12);
+  background: linear-gradient(135deg, #e0ebff, #f3f6ff);
+}
+
+/* --- Grid Layout --- */
+.timeline-grid {
+  display: grid;
+  grid-template-columns: 120px 1fr 160px 140px 80px 140px;
+  gap: 12px;
+  min-width: 700px;
+  align-items: center;
+}
+
+/* --- Header Row --- */
+.timeline-header {
+  display: grid;
+  grid-template-columns: 120px 1fr 160px 140px 80px 140px;
+  background: linear-gradient(90deg, #e0f0ff, #dbeafe);
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.timeline-header div {
+  padding: 8px 10px;
+  color: #1e3a8a;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  text-align: left;
+}
+
+.timeline-header div:last-child {
+  border-right: none;
+  text-align: center;
+}
+
+/* --- Rows --- */
+.timeline-row {
+  display: contents;
+}
+
+.timeline-row div {
+  padding: 8px 10px;
+  border-bottom: 1px solid #dbe4f2;
+  font-size: 0.9rem;
+  color: #1f2937;
+  background: linear-gradient(90deg, #ffffff, #f9fbff);
+  border-radius: 8px;
+  margin-bottom: 4px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.timeline-row div:hover {
+  background: linear-gradient(90deg, #f0f4ff, #e8efff);
+  transform: translateY(-1px);
+}
+
+/* --- Remarks Column --- */
+.remarks {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Status Badges --- */
+.status-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  background: #9ca3af;
+}
+
+.status-inprogress {
+  background: linear-gradient(90deg, #facc15, #f59e0b);
+}
+
+.status-complete {
+  background: linear-gradient(90deg, #4ade80, #16a34a);
+}
+
+.status-pending {
+  background: linear-gradient(90deg, #f472b6, #be185d);
+}
+
+/* --- Action Buttons --- */
+.btn-secondary {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(90deg, #2563eb, #1e40af);
+}
+
+/* --- Loading, Error, and Empty States --- */
+.loading,
+.error,
+.empty {
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.loading {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.empty {
+  text-align: center;
+  color: #475569;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+@media (max-width: 1024px) {
+  .timeline-grid {
+    grid-template-columns: 100px 1fr 140px 120px 70px 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline-grid {
+    display: block;
+    min-width: 100%;
+  }
+
+  .timeline-header {
+    display: none;
+  }
+
+  .timeline-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 4px;
+  }
+
+  .timeline-row div {
+    padding: 6px 8px;
+    font-size: 0.85rem;
+  }
+
+  .timeline-row div::before {
+    content: attr(data-label);
+    font-weight: 600;
+    display: inline-block;
+    width: 100px;
+    color: #374151;
+  }
+
+  .remarks {
+    max-width: 100%;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .btn-secondary {
+    width: 100%;
+    text-align: center;
+  }
+}

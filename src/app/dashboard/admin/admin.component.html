@@ -1,0 +1,188 @@
+<header class="topbar">
+  <div class="logo-area">
+    <img src="/assets/logo.png" alt="OrderCraft logo" class="logo" />
+    <div class="logo-text">
+      <h1>OrderCraft</h1>
+      <span>Dashboard</span>
+    </div>
+  </div>
+
+  <div class="actions">
+    <!-- Notifications dropdown -->
+    <div class="notification-wrapper">
+      <button
+        class="icon-btn"
+        title="Notifications"
+        (click)="toggleNotifications()"
+        [attr.aria-label]="'Notifications (' + notifications.length + ')'">
+        <i class="fas fa-bell" aria-hidden="true"></i>
+        <span *ngIf="notifications.length > 0" class="notif-badge" aria-live="polite">{{ notifications.length }}</span>
+      </button>
+
+      <div class="dropdown" *ngIf="showNotifications" role="region" [attr.aria-label]="'Notifications list'">
+        <div *ngFor="let note of notifications" class="dropdown-item">
+          <i class="fas fa-info-circle" aria-hidden="true"></i>
+          <span>{{ note }}</span>
+        </div>
+        <div *ngIf="notifications.length === 0" class="dropdown-item empty">
+          No new notifications
+        </div>
+      </div>
+    </div>
+
+    <button
+      class="icon-btn"
+      title="Profile"
+      (click)="goToProfile()"
+      [attr.aria-label]="'Profile'">
+      <i class="fas fa-user" aria-hidden="true"></i>
+    </button>
+
+    <button
+      class="logout-btn"
+      (click)="logout()"
+      [attr.aria-label]="'Logout'">
+      <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+      Logout
+    </button>
+  </div>
+</header>
+
+<main class="main-content">
+  <!-- KEEP your existing dashboard content here -->
+</main>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" role="main" aria-labelledby="admin-welcome">
+  <div class="mb-8">
+    <h2 id="admin-welcome" class="title">Welcome ADMIN</h2>
+    <p class="subtitle">Here's what's happening in your inventory today.</p>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="stats-grid" role="list" aria-label="Key statistics">
+    <div *ngFor="let stat of stats" class="stat-card" role="region" [attr.aria-label]="stat.label">
+      <div class="stat-top">
+        <div class="stat-icon" aria-hidden="true">{{ stat.icon }}</div>
+        <div class="stat-change" [ngClass]="changeColor(stat.changeType)">{{ stat.change }}</div>
+      </div>
+      <div class="stat-body">
+        <!-- live mapping: checks stat.key (users|suppliers|orders|alerts) -->
+        <p class="stat-value" aria-live="polite">
+          <ng-container [ngSwitch]="stat.key">
+            <ng-container *ngSwitchCase="'users'">{{ userCount ?? '-' }}</ng-container>
+            <ng-container *ngSwitchCase="'suppliers'">{{ supplierCount ?? '-' }}</ng-container>
+            <ng-container *ngSwitchCase="'orders'">{{ orderSummary?.totalOrders ?? '-' }}</ng-container>
+            <ng-container *ngSwitchCase="'alerts'">{{ alertsCountDisplay }}</ng-container>
+            <ng-container *ngSwitchDefault>{{ stat.value ?? '-' }}</ng-container>
+          </ng-container>
+        </p>
+        <p class="stat-label">{{ stat.label }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Grid -->
+  <div class="content-grid">
+    <!-- Recent Activity -->
+    <section class="card activities" aria-labelledby="recent-activity-heading">
+      <h3 id="recent-activity-heading" class="card-title">Recent Activity</h3>
+
+      <!-- Empty state -->
+      <div *ngIf="!recentActivities?.length" class="activity-row" role="note" aria-live="polite">
+        <div class="activity-icon" aria-hidden="true">✅</div>
+        <div class="activity-texts">
+          <div class="activity-title">All clear</div>
+          <div class="activity-subtitle">No recent alerts</div>
+        </div>
+      </div>
+
+      <!-- Alerts mapped to activity rows -->
+      <div *ngFor="let a of recentActivities; trackBy: trackByActivity" class="activity-row" role="listitem" [ngClass]="a.wrapperBg">
+        <div class="activity-icon" [ngClass]="a.iconColor" aria-hidden="true">{{ a.icon }}</div>
+        <div class="activity-texts">
+          <div class="activity-title">{{ a.title }}</div>
+          <div class="activity-subtitle">{{ a.subtitle }}</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="card quick-actions-card" aria-labelledby="quick-actions-heading">
+      <h3 id="quick-actions-heading" class="card-title">Quick Actions</h3>
+      <div class="quick-actions-grid">
+        <button
+          *ngFor="let q of quickActions"
+          class="action-card"
+          (click)="
+            q.title === 'Register User' ? registerUser() :
+            q.title === 'Unlock Users' ? unlockUsers() :
+            resetPassword()
+          "
+          [attr.aria-label]="q.title">
+          <div class="action-icon" aria-hidden="true">{{ q.icon }}</div>
+          <div class="action-body">
+            <div class="action-title">{{ q.title }}</div>
+            <div class="action-sub">{{ q.subtitle }}</div>
+          </div>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Users table -->
+  <section class="card users-card" aria-labelledby="users-heading">
+    <div class="users-header">
+      <h3 id="users-heading" class="card-title">All Users</h3>
+    </div>
+
+    <div *ngIf="loadingUsers" class="loading-row" role="status" aria-live="polite">Loading users…</div>
+    <div *ngIf="loadError" class="error-row" role="alert">{{ loadError }}</div>
+
+    <div class="table-wrap" *ngIf="!loadingUsers && !loadError">
+      <table class="user-table" role="table" aria-label="Users table">
+        <thead role="rowgroup">
+          <tr role="row">
+            <th role="columnheader">ID</th>
+            <th role="columnheader">Username</th>
+            <th role="columnheader">Full Name</th>
+            <th role="columnheader">Email</th>
+            <th role="columnheader">Role</th>
+            <th role="columnheader">Actions</th>
+          </tr>
+        </thead>
+        <tbody role="rowgroup">
+          <tr *ngFor="let user of (showAllUsers ? users : (users | slice:0:2))" role="row">
+            <td role="cell">{{ user.userId }}</td>
+            <td role="cell" class="font-medium">{{ user.userName }}</td>
+            <td role="cell">{{ user.userFullName }}</td>
+            <td role="cell">{{ user.userEmail }}</td>
+            <td role="cell">
+              <span
+                class="role-badge"
+                [ngClass]="{
+                  'role-admin': user.role?.roleName === 'Admin',
+                  'role-procurement': user.role?.roleName === 'Procurement Officer',
+                  'role-inventory': user.role?.roleName === 'Inventory Manager',
+                  'role-production': user.role?.roleName === 'Production Manager'
+                }"
+                [attr.aria-label]="'Role: ' + (user.role?.roleName || user.role)">
+                {{ user.role?.roleName || user.role }}
+              </span>
+            </td>
+            <td role="cell">
+              <button class="link edit" (click)="editUser(user)" [attr.aria-label]="'Edit user ' + user.userName">Update</button>
+              <button class="link delete" (click)="deleteUser(user.userId)" [attr.aria-label]="'Delete user ' + user.userName">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="text-center mt-6">
+      <button class="btn ghost" (click)="toggleUsers()" [attr.aria-pressed]="showAllUsers">
+        {{ showAllUsers ? 'Show Less' : 'See All Users' }}
+      </button>
+    </div>
+  </section>
+</main>
+<!-- Updated Code  -->

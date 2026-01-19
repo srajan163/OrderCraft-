@@ -1,0 +1,65 @@
+<form [formGroup]="orderForm" (ngSubmit)="submit()">
+  <div>
+    <label for="orderId">Order ID:</label>
+    <input
+      id="orderId"
+      type="number"
+      formControlName="orderId"
+      (change)="onOrderIdChange($event)"
+    />
+  </div>
+
+  <!-- Signals must be called like functions in the template -->
+  <div *ngIf="loading()">Loading order...</div>
+  <div *ngIf="errorMessage()" class="error">{{ errorMessage() }}</div>
+
+  <div>
+    <label for="deliveryDate">Expected Delivery Date:</label>
+    <input
+      id="deliveryDate"
+      type="date"
+      formControlName="newExpectedDeliveryDate"
+    />
+  </div>
+
+  <div>
+    <label for="status">Status:</label>
+    <select id="status" formControlName="newDeliveryStatus">
+      <option value="PROCESSING">PROCESSING</option>
+      <option value="SHIPPED">SHIPPED</option>
+      <option value="DELIVERED">DELIVERED</option>
+    </select>
+  </div>
+
+  <!-- FormArray for Items -->
+  <div formArrayName="items">
+    <table>
+      <thead>
+        <tr>
+          <th>Item ID</th>
+          <th>Quantity</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let item of items.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <td>
+            <input type="number" formControlName="itemId" />
+          </td>
+          <td>
+            <input type="number" formControlName="newQuantity" />
+          </td>
+          <td>
+            <button type="button" (click)="removeItem(i)">Remove</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button type="button" (click)="addItem()">Add Item</button>
+  <button type="submit" [disabled]="orderForm.invalid">Update Order</button>
+</form>

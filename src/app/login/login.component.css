@@ -1,0 +1,135 @@
+/* Background with subtle gradient */
+.background {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+ 
+/* Overlay with semi-transparent backdrop */
+.overlay {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  padding: 40px 50px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 1s ease forwards;
+}
+ 
+/* Title */
+.project-title h1 {
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #4a4a4a;
+  letter-spacing: 1px;
+}
+
+/* ✅ Added styles for captcha */
+.login-box ngx-recaptcha2 {
+  display: block;
+  margin: 10px 0;
+}
+ 
+/* Login box */
+.login-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+ 
+/* Form title */
+.login-box h2 {
+  font-weight: 600;
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 25px;
+}
+ 
+/* Form group */
+.form-group {
+  text-align: left;
+}
+ 
+/* Labels */
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 0.9rem;
+}
+ 
+/* Inputs */
+.form-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1.5px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+ 
+.form-group input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 8px rgba(102, 126, 234, 0.6);
+  outline: none;
+}
+ 
+/* Login button */
+.btn-login {
+  background: #667eea;
+  color: white;
+  padding: 14px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+ 
+.btn-login:disabled {
+  background: #a3a3a3;
+  cursor: not-allowed;
+}
+ 
+.btn-login:not(:disabled):hover {
+  background: #5a6cd2;
+}
+ 
+/* Error message */
+.error {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+ 
+/* Forgot Password button */
+.forgot-btn {
+  margin-top: 20px;
+  background: transparent;
+  border: none;
+  color: #667eea;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+ 
+.forgot-btn:hover {
+  color: #4a54c9;
+  text-decoration: underline;
+}
+ 
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+ 
+ 

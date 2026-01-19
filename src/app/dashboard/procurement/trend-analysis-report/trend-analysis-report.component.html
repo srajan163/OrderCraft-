@@ -1,0 +1,73 @@
+<h2>Trend Analysis Report</h2>
+<div align = "center">
+<div class="form-group">
+  <label>Metric:</label>
+  <select [(ngModel)]="metric">
+    <option value="">Select Metric</option>
+    <option value="inventory">Inventory Trend</option>
+    <option value="supplier">Supplier Performance</option>
+    <option value="orders">Order Fulfillment</option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label>Start Date:</label>
+  <input type="date" [(ngModel)]="startDate">
+</div>
+
+<div class="form-group">
+  <label>End Date:</label>
+  <input type="date" [(ngModel)]="endDate">
+</div>
+
+<div>
+  <button (click)="generateReport()" 
+          [disabled]="!metric || !startDate || !endDate">
+    Generate Report
+  </button>
+</div>
+</div>
+
+<!-- ================= Report Card ================= -->
+<div *ngIf="reportData" class="report-card">
+
+  <h3>📊 Trend Analysis Summary</h3>
+
+  <div class="info-grid">
+    <div class="info-item"><strong>Metric:</strong> {{ reportData.metric || metric }}</div>
+    <div class="info-item"><strong>From:</strong> {{ startDate }}</div>
+    <div class="info-item"><strong>To:</strong> {{ endDate }}</div>
+    <div class="info-item">
+      <strong>Status:</strong> 
+      <span *ngIf="reportData.success; else fail">✔ Successful</span>
+      <ng-template #fail>❌ Failed</ng-template>
+    </div>
+  </div>
+
+  <!-- ========= Charts Section ========= -->
+  <div class="charts-container">
+    <div class="chart-wrapper">
+      <h4>Trend Over Time</h4>
+      <canvas id="trendLineChart"></canvas>
+    </div>
+
+    <div class="chart-wrapper">
+      <h4>Metric Distribution</h4>
+      <canvas id="trendPieChart"></canvas>
+    </div>
+  </div>
+
+  <h3>📌 Detailed Report</h3>
+
+  <table class="rating-table">
+    <tr>
+      <th>Key</th>
+      <th>Value</th>
+    </tr>
+    <tr *ngFor="let key of objectKeys(reportData)">
+      <td><strong>{{ key }}</strong></td>
+      <td>{{ reportData[key] }}</td>
+    </tr>
+  </table>
+
+</div>

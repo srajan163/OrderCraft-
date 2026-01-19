@@ -1,0 +1,48 @@
+<div class="order-cancel-container">
+  <h2>Cancel Purchase Order</h2>
+
+  <form (ngSubmit)="cancelOrder()">
+    <!-- Order ID input -->
+    <label for="orderId">Enter Order ID:</label>
+    <input type="text" [(ngModel)]="orderId" name="orderId" required />
+
+    <!-- Load button -->
+    <button type="button" (click)="loadOrder()" [disabled]="loading">
+      {{ loading ? 'Loading...' : 'Load Order' }}
+    </button>
+
+    <!-- Error message -->
+    <p *ngIf="errorMsg" class="error">{{ errorMsg }}</p>
+
+    <!-- Order details -->
+    <div *ngIf="order" class="order-details">
+      <h3>Order Details</h3>
+      <p><strong>Supplier:</strong> {{ order?.supplier?.suppliersName }}</p>
+      <p><strong>Delivery Date:</strong> {{ order?.expectedDeliveryDate | date: 'longDate' }}</p>
+      <p><strong>Status:</strong> {{ order?.poDeliveryStatus }}</p>
+
+      <ul>
+        <li *ngFor="let item of order?.items">
+          {{ item?.product?.productsName }} -
+          Qty: {{ item?.poiQuantity }},
+          Cost: ₹{{ item?.poiPrice }}
+        </li>
+      </ul>
+
+      <!-- Warning message -->
+      <p *ngIf="!isCancellable()" class="warning">
+        ❌ Only orders with status <strong>ORDER PLACED</strong> or <strong>PENDING</strong> can be cancelled.
+      </p>
+
+      <!-- Cancel button (only if cancellable) -->
+      <button
+        *ngIf="isCancellable()"
+        type="submit"
+        class="cancel-btn"
+        [disabled]="loading"
+      >
+        {{ loading ? 'Cancelling...' : 'Confirm Cancel' }}
+      </button>
+    </div>
+  </form>
+</div>

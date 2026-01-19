@@ -1,0 +1,46 @@
+<div class="update-user-container" *ngIf="user">
+  <h2>Update User: {{ user.userName }}</h2>
+
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+    <label>
+      Full Name:
+      <input type="text" formControlName="userFullName" />
+      <div
+        *ngIf="editForm.controls['userFullName'].invalid && (editForm.controls['userFullName'].dirty || editForm.controls['userFullName'].touched)"
+        class="error"
+      >
+        Full Name is required (min 3 characters).
+      </div>
+    </label>
+
+    <label>
+      Email:
+      <input type="email" formControlName="userEmail" />
+      <div
+        *ngIf="editForm.controls['userEmail'].invalid && (editForm.controls['userEmail'].dirty || editForm.controls['userEmail'].touched)"
+        class="error"
+      >
+        Valid Email is required.
+      </div>
+    </label>
+
+    <label>
+      Mobile:
+      <input type="text" formControlName="userMobile" />
+    </label>
+
+    <label>
+      Role:
+      <input type="text" [value]="user.role.roleName" readonly />
+    </label>
+
+    <div class="form-buttons">
+      <button type="submit" [disabled]="editForm.invalid">Save</button>
+      <button type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="!user">
+  Loading user details...
+</div>

@@ -1,0 +1,47 @@
+<div class="dashboard-layout">
+  <aside class="dashboard-sidebar">
+    <div class="sidebar-title"> Procurement</div>
+    <nav class="nav-links">
+      <button routerLink="track-order" routerLinkActive="active">Track Order</button>
+      <button routerLink="orders" routerLinkActive="active">View Orders</button>
+      <button routerLink="create-order" routerLinkActive="active">Create Order</button>
+      <button routerLink="update-order" routerLinkActive="active">Update Order</button>
+      <button routerLink="cancel-order" routerLinkActive="active">Cancel Order</button>
+      <button routerLink="customer-order" routerLinkActive="active">Customer Order</button>
+      <button routerLink="return-order" routerLinkActive="active">Return Order</button>
+      <button routerLink='trend-report' routerLinkActive="active">Trend Report</button>
+      <button routerLink='supplier-performance' routerLinkActive="active">Supplier Performance Reports</button>
+      <button routerLink='supplier-history' routerLinkActive="active">Supplier History</button>
+
+
+
+      <!-- Manage Suppliers -->
+      <button routerLink="supplier-management" routerLinkActive="active">Manage Suppliers</button>
+
+
+      <!-- <button routerLink="payment" routerLinkActive="active">Payment</button> -->
+
+      <!-- Single Payment button (styled) -->
+      <button class="payment-sidebar-btn" routerLink="payment" routerLinkActive="active">Payment</button>
+
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <header class="dashboard-header">
+      <h1>Welcome Procurement Officer! 🛒</h1>
+
+      <div class="user-info">
+        <button class="home-btn" routerLink="home">🏠 Home</button>
+        <button class="user-info-btn" (click)="toggleMenu()">User Info ⯆</button>
+        <div class="user-dropdown" [class.show]="menuOpen">
+          <button (click)="goToProfile()">👤 Profile</button>
+          <button class="logout-item" (click)="logout()">🚪 Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ROUTED CONTENT (payment component will appear here) -->
+    <router-outlet></router-outlet>
+  </main>
+</div>

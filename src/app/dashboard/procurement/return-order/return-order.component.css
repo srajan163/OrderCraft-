@@ -1,0 +1,17 @@
+/*Return-order*/
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px 0;
+  background-color: #f8f9fa; /* light gray background */
+}
+ 
+/* container class */
+.form-container {
+  width: 100%;
+  max-width: 800px; /* form max width */
+}
+ 
+ 

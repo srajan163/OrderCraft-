@@ -1,0 +1,45 @@
+ 
+<div class="popup-container">
+ 
+  <div class="success-circle">
+    <span class="checkmark">✔</span>
+  </div>
+ 
+  <h2 class="popup-title">Registration Successful</h2>
+  <p class="popup-sub">Here are the details you submitted:</p>
+ 
+  <!-- BASIC INFO -->
+  <div class="section">
+    <h3 class="section-title">Basic Information</h3>
+    <div class="info-grid">
+      <p><strong>Full Name:</strong> {{ data.submitted.userFullName }}</p>
+      <p><strong>Username:</strong> {{ data.submitted.userName }}</p>
+      <p><strong>Email:</strong> {{ data.submitted.userEmail }}</p>
+      <p><strong>Mobile:</strong> {{ data.submitted.userMobile }}</p>
+    </div>
+  </div>
+ 
+  <!-- ROLE -->
+  <div class="section">
+    <h3 class="section-title">Role</h3>
+    <p class="info-grid"><strong>{{ data.submitted.role.roleName }}</strong></p>
+  </div>
+ 
+  <!-- ADDRESS -->
+  <div class="section">
+    <h3 class="section-title">Address</h3>
+    <div class="info-grid">
+      <p><strong>Street:</strong> {{ data.submitted.address.addressStreet }}</p>
+      <p><strong>City:</strong> {{ data.submitted.address.addressCity }}</p>
+      <p><strong>State:</strong> {{ data.submitted.address.addressState }}</p>
+      <p><strong>Postal:</strong> {{ data.submitted.address.addressPostalCode }}</p>
+      <p><strong>Country:</strong> {{ data.submitted.address.addressCountry }}</p>
+    </div>
+  </div>
+ 
+  <div class="actions">
+    <button mat-raised-button (click)="confirm()">Confirm</button>
+  </div>
+</div>
+ 
+    

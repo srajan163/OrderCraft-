@@ -1,0 +1,128 @@
+<h2>Payment</h2>
+
+<!-- Status legend at top -->
+<div class="status-summary">
+  <h3>Payment Status</h3>
+  <div class="legend">
+    <span class="badge pending">PENDING</span> No payment made
+    <span class="badge partial">PARTIAL</span> Partially paid
+    <span class="badge paid">PAID</span> Fully paid
+  </div>
+</div>
+
+<div class="layout">
+  <!-- Create Payment -->
+  <section class="panel">
+    <h3>Create Payment</h3>
+
+    <form [formGroup]="createForm" (ngSubmit)="submitCreate()" class="form">
+      <label>Supplier ID
+        <input type="number" formControlName="suppliersId" placeholder="e.g. 1">
+      </label>
+
+      <label>Supplier Name (optional)
+        <input type="text" formControlName="suppliersName" placeholder="(optional)">
+      </label>
+
+      <label>Invoice Number
+        <input type="text" formControlName="invoiceNumber" placeholder="INV-0001">
+      </label>
+
+      <label>Invoice Date
+        <input type="date" formControlName="invoiceDate">
+      </label>
+
+      <label>Due Date
+        <input type="date" formControlName="dueDate">
+      </label>
+
+      <label>Amount
+        <input type="number" step="0.01" formControlName="amount" placeholder="0.00">
+      </label>
+
+      <div class="actions">
+        <button type="submit" [disabled]="creating">Create</button>
+      </div>
+
+      <div class="error" *ngIf="createError">{{ createError }}</div>
+    </form>
+  </section>
+
+  <!-- Payments List -->
+  <section class="panel grow">
+    <div class="list-header">
+      <h3>Payments</h3>
+
+      <div class="filters">
+        <input
+          type="number"
+          [(ngModel)]="supplierFilter"
+          placeholder="Filter by Supplier ID"
+          aria-label="Filter by Supplier ID"
+        >
+        <label>
+          <input type="checkbox" [(ngModel)]="onlyOutstanding">
+          Only Outstanding
+        </label>
+        <button type="button" (click)="load()">Apply</button>
+        <button type="button" (click)="resetFilters()">Reset</button>
+      </div>
+    </div>
+
+    <div *ngIf="loading">Loading…</div>
+    <div *ngIf="loadError" class="error">{{ loadError }}</div>
+
+    <!-- Inner scroll container so page fits neatly -->
+    <div class="table-wrap" *ngIf="!loading && payments.length">
+      <table class="table" aria-label="Supplier payments">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Supplier</th>
+            <th>Invoice</th>
+            <th>Invoice Date</th>
+            <th>Due Date</th>
+            <th>Amount</th>
+            <th>Paid</th>
+            <th>Status</th>
+            <th>Pay</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let p of payments"
+            [ngClass]="'status-' + (p.status?.toLowerCase() || 'pending')"
+          >
+            <td>{{ p.paymentId }}</td>
+            <td>{{ p.supplier?.suppliersId }} — {{ p.supplier?.suppliersName || '-' }}</td>
+            <td>{{ p.invoiceNumber }}</td>
+            <td>{{ p.invoiceDate }}</td>
+            <td>{{ p.dueDate }}</td>
+            <td>{{ p.amount | number:'1.2-2' }}</td>
+            <td>{{ p.paidAmount || 0 | number:'1.2-2' }}</td>
+            <td>
+              <span class="badge" [ngClass]="p.status?.toLowerCase()">{{ p.status }}</span>
+            </td>
+            <td class="paycell">
+              <input
+                type="number"
+                min="0.01"
+                step="0.01"
+                [(ngModel)]="payAmount[p.paymentId!]"
+                placeholder="amount"
+                aria-label="Payment amount"
+              >
+              <button type="button" (click)="pay(p)">Pay</button>
+            </td>
+            <td>
+              <button type="button" class="danger" (click)="remove(p)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p *ngIf="!loading && !payments.length">No payments found.</p>
+  </section>
+</div>

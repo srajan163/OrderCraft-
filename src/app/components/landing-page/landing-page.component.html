@@ -1,0 +1,140 @@
+<div class="min-h-screen flex flex-col">
+ 
+  <!-- Header -->
+ 
+ 
+  <header class="bg-white shadow-sm border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex items-center justify-between">
+        <app-header
+          [title]="'InventoryPro'"
+          [subtitle]="'Enterprise Management System'"
+          [icon]="header.Home">
+        </app-header>
+        <!-- <div class="flex items-center space-x-3">
+          <div class="bg-blue-600 p-2 rounded-lg">
+           
+            <lucide-angular [img]="headerIcon" class="w-8 h-8 text-white"></lucide-angular>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold text-slate-800">InventoryPro</h1>
+            <p class="text-sm text-slate-500">Enterprise Management System</p>
+          </div>
+        </div> -->
+        <a
+          routerLink="/login"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          Login to Access System
+        </a>
+      </div>
+    </div>
+  </header>
+ 
+  <!-- Announcement Banner -->
+  <div class="bg-blue-50 border-b border-blue-200 px-4 py-2">
+    <div class="max-w-7xl mx-auto">
+      <p class="text-sm text-blue-800 text-center">
+        <span class="font-medium">System Update:</span> Scheduled maintenance on Jan 15, 2025 from 2:00-4:00 AM EST.
+      </p>
+    </div>
+  </div>
+ 
+  <!-- Main Content -->
+  <main class="flex-1">
+    <!-- Hero Section -->
+    <section class="py-16 lg:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
+          <div>
+            <h2 class="text-4xl lg:text-5xl font-bold text-slate-800 leading-tight">
+              Enterprise Inventory Management
+              <span class="block text-blue-600">Made Simple</span>
+            </h2>
+            <p class="mt-6 text-xl text-slate-600 leading-relaxed">
+              Streamline your supply chain operations with real-time visibility,
+              intelligent automation, and comprehensive analytics in one integrated platform.
+            </p>
+            <div class="mt-8 flex flex-col sm:flex-row gap-4">
+              <a
+                routerLink="/login"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium text-center transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              >
+                Access Dashboard
+              </a>
+            </div>
+          </div>
+ 
+          <!-- Video Section -->
+          <div class="mt-12 lg:mt-0">
+            <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden relative">
+              <video
+                #videoRef
+                class="w-full aspect-video object-cover"
+                muted
+                loop
+                playsinline
+                poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23f8fafc'/%3E%3Cstop offset='100%25' style='stop-color:%23e2e8f0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='450' fill='url(%23bg)'/%3E%3Cg transform='translate(400,225)'%3E%3Ccircle cx='0' cy='0' r='40' fill='%232563eb'/%3E%3Cpath d='M-15,-10 L15,0 L-15,10 Z' fill='white'/%3E%3C/g%3E%3Ctext x='400' y='300' text-anchor='middle' fill='%23475569' font-family='system-ui' font-size='24' font-weight='600'%3EInventoryPro Overview%3C/text%3E%3Ctext x='400' y='330' text-anchor='middle' fill='%2364748b' font-family='system-ui' font-size='16'%3EStreamlining your inventory operations%3C/text%3E%3C/svg%3E"
+              >
+                <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4" />
+                <source src="/videos/inventory-overview.webm" type="video/webm" />
+              </video>
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+                <h3 class="text-white text-xl font-bold mb-1">InventoryPro in Action</h3>
+                <p class="text-white/90 text-sm">Real-time inventory management and analytics</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h3 class="text-3xl font-bold text-slate-800">Key Features</h3>
+          <p class="mt-4 text-lg text-slate-600">
+            Everything you need to manage your inventory and supply chain efficiently
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            *ngFor="let feature of features"
+            class="bg-slate-50 rounded-lg p-6 hover:bg-slate-100 transition-colors duration-200"
+          >
+            <div class="flex items-center gap-x-3 mb-4">
+              <!-- replaced <i class="lucide ..."> -->
+              <lucide-angular [img]="feature.icon" class="w-9 h-9 text-blue-600"></lucide-angular>
+              <h4 class="text-lg font-semibold text-slate-800">{{ feature.title }}</h4>
+            </div>
+            <p class="text-slate-600">{{ feature.description }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- Quick Links Section -->
+    <section class="py-12 bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-8">
+          <h3 class="text-2xl font-bold text-slate-800">Need Help?</h3>
+          <p class="mt-2 text-slate-600">Quick access to support resources</p>
+        </div>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a
+            *ngFor="let link of quickLinks"
+            [routerLink]="link.href"
+            class="flex items-center justify-center space-x-2 bg-white hover:bg-slate-50 text-slate-700 px-6 py-3 rounded-lg border border-slate-200 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            <!-- replaced <i class="lucide ..."> -->
+            <lucide-angular [img]="link.icon" class="w-5 h-5"></lucide-angular>
+            <span class="font-medium">{{ link.text }}</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+ 
+  <app-footer></app-footer>
+</div>

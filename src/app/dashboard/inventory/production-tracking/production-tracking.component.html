@@ -1,0 +1,88 @@
+<!-- <div class="tracking-container">
+  <h2>Production Schedule Tracking</h2>
+
+  <div *ngIf="isLoading" class="loading">Loading production orders...</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <table *ngIf="!isLoading && !errorMessage && orders.length > 0">
+    <thead>
+      <tr>
+        <th>Schedule ID</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{ order.scheduleId }}</td>
+        <td>{{ order.productName }}</td>
+        <td>{{ order.quantity }}</td>
+        <td>{{ order.startDate | date: 'dd-MM-yyyy' }}</td>
+        <td>{{ order.endDate   | date: 'dd-MM-yyyy' }}</td>
+        <td>
+          <span
+            [ngClass]="{
+              'badge-red': order.status === 'CREATED',
+              'badge-yellow': order.status === 'IN_PROGRESS',
+              'badge-green': order.status === 'COMPLETED'
+            }">
+            {{ order.status }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->
+ 
+<div class="tracking-container">
+  <h2>Production Schedule Tracking</h2>
+ 
+  <div *ngIf="isLoading" class="loading">Loading production orders...</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+ 
+  <table *ngIf="!isLoading && !errorMessage && orders.length > 0" class="tracking-table">
+    <thead>
+      <tr>
+        <th>Schedule ID</th>
+        <th>Product ID</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{ order.scheduleId }}</td>
+        <td>{{ order.productId }}</td>
+        <td>{{ order.productName }}</td>
+        <td>{{ order.quantity }}</td>
+        <td>{{ order.startDate | date: 'dd-MM-yyyy HH:mm' }}</td>
+        <td>{{ order.endDate   | date: 'dd-MM-yyyy HH:mm' }}</td>
+        <td>
+  <ng-container *ngIf="order.status === 'CREATED'; else completedBadge">
+    <div class="custom-select-wrapper">
+      <select class="status-select custom-button"
+              [ngClass]="{'created-select': order.status === 'CREATED'}"
+              [ngModel]="order.status"
+              (ngModelChange)="changeStatus(order, $event)">
+        <option value="CREATED" class="created-option">CREATED</option>
+        <option value="COMPLETED">Mark as COMPLETED</option>
+      </select>
+    </div>
+  </ng-container>
+  <ng-template #completedBadge>
+    <span class="status-badge completed">COMPLETED</span>
+  </ng-template>
+</td>
+ 
+      </tr>
+    </tbody>
+  </table>
+</div>
+ 
+ 

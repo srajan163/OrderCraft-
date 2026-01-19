@@ -1,0 +1,64 @@
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">📊 Production Analytics Dashboard</h2>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="text-center py-4">
+    <p>Loading data...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMsg" class="alert alert-danger text-center">{{ errorMsg }}</div>
+
+  <!-- Summary Cards + Pie Chart -->
+  <div *ngIf="summary && !isLoading" class="row g-3">
+
+    <!-- Schedule Stats -->
+    <div class="col-6 col-md-3" *ngFor="let card of [
+      { title: 'Total Schedules', value: summary.totalSchedules },
+      { title: 'Completed Schedules', value: summary.completedSchedules },
+      { title: 'Hold Schedules', value: summary.holdSchedules },
+      { title: 'Delayed Schedules', value: summary.delayedSchedules }
+    ]">
+      <div class="card text-center shadow-sm p-3 analytics-card schedule-card">
+        <h5>{{ card.title }}</h5>
+        <h3 class="text-primary">{{ card.value }}</h3>
+      </div>
+    </div>
+
+    <!-- Unit Stats -->
+    <div class="col-6 col-md-3" *ngFor="let card of [
+      { title: 'Total Units', value: summary.totalUnits },
+      { title: 'Active Units', value: summary.activeUnits },
+      { title: 'Utilization (%)', value: summary.unitUtilizationRate.toFixed(1) },
+      { title: 'Completion Rate (%)', value: summary.completionRate.toFixed(1) }
+    ]">
+      <div class="card text-center shadow-sm p-3 analytics-card unit-card">
+        <h5>{{ card.title }}</h5>
+        <h3 class="text-success">{{ card.value }}</h3>
+      </div>
+    </div>
+
+    <!-- Average Production Duration -->
+    <div class="col-12 text-center mt-4">
+      <div class="card shadow-sm p-4 analytics-card duration-card">
+        <h5>Average Production Duration</h5>
+        <h3 class="text-warning">{{ summary.averageProductionDays.toFixed(1) }} days</h3>
+      </div>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="col-12 mt-4">
+      <div class="card shadow-sm p-4 analytics-card">
+        <h5 class="text-center mb-3">Schedule Status Distribution</h5>
+        <div style="max-width: 400px; margin: auto;">
+          <canvas baseChart
+                  [data]="pieChartData"
+                  [type]="pieChartType"
+                  [options]="pieChartOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

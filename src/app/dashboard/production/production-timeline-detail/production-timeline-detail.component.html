@@ -1,0 +1,27 @@
+<div class="production-page">
+  <div class="page-header">
+    <h1 class="title">Timeline Details</h1>
+    <div class="header-actions">
+      <button class="btn-primary" (click)="goBack()">Back to Timeline</button>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">Loading...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="!isLoading && timeline.length === 0" class="empty">No timeline data found for ID {{ psId }}</div>
+
+  <div *ngIf="!isLoading && timeline.length > 0" class="detail-card">
+    <div *ngFor="let t of timeline" class="stage-row">
+      <div class="stage-left">
+        <div class="stage-status">{{ t.status }}</div>
+        <div class="stage-meta">By: {{ t.updatedBy }}</div>
+        <div class="stage-meta">Qty: {{ t.quantity }}</div>
+      </div>
+      <div class="stage-right">
+        <div class="stage-time">{{ t.updatedAt | date:'dd MMM yyyy, HH:mm' }}</div>
+        <div class="stage-remarks">{{ t.remarks }}</div>
+      </div>
+    </div>
+  </div>
+</div>

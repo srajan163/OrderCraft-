@@ -1,0 +1,40 @@
+<div class="container">
+
+  <h2>Supplier Payment History</h2>
+
+  <div class="search-box">
+    <label>Supplier ID:</label>
+    <input type="number" [(ngModel)]="supplierId" placeholder="Enter Supplier ID">
+    <button (click)="getSupplierHistory()">Search</button>
+  </div>
+
+  <div *ngIf="loading" class="info">Loading data...</div>
+  <div *ngIf="message" class="info">{{ message }}</div>
+
+  <table *ngIf="paymentHistory.length > 0" class="history-table">
+    <thead>
+      <tr>
+        <th>Payment ID</th>
+        <th>Invoice Number</th>
+        <th>Invoice Date</th>
+        <th>Due Date</th>
+        <th>Amount</th>
+        <th>Paid Amount</th>
+        <th>Status</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of paymentHistory">
+        <td>{{ item.paymentId }}</td>
+        <td>{{ item.invoiceNumber }}</td>
+        <td>{{ item.invoiceDate }}</td>
+        <td>{{ item.dueDate }}</td>
+        <td>{{ item.amount }}</td>
+        <td>{{ item.paidAmount }}</td>
+        <td>{{ item.status }}</td>
+        <td>{{ item.createdAt }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,121 @@
+/* .stock-container {
+  padding: 20px;
+}
+ 
+h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+ 
+.loading {
+  color: blue;
+  font-weight: bold;
+}
+ 
+.error {
+  color: red;
+  font-weight: bold;
+}
+ 
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+ 
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+ 
+th {
+  background-color: #f2f2f2;
+}
+ 
+.low-stock {
+  background-color: #ffe5e5;
+}
+ 
+.over-stock {
+  background-color: #fff5cc;
+} */
+ 
+ 
+.stock-container {
+  padding: 20px;
+}
+ 
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+ 
+.loading {
+  color: #007bff;
+  font-weight: bold;
+  text-align: center;
+}
+ 
+.error {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+}
+ 
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+ 
+th, td {
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  text-align: center;
+}
+ 
+th {
+  background-color: #f7f7f7;
+  font-weight: bold;
+  font-size: 14px;
+  color: #444;
+}
+ 
+/* Badge styles */
+.badge-red {
+  background-color: #f8d7da;
+  color: #a94442;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+  display: inline-block;
+  min-width: 80px;
+}
+ 
+.badge-yellow {
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+  display: inline-block;
+  min-width: 80px;
+}
+ 
+.badge-green {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+  display: inline-block;
+  min-width: 80px;
+}
+ 
+ 

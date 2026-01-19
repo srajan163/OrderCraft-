@@ -1,0 +1,134 @@
+<mat-card>
+  <h2>Order History</h2>
+ 
+   <!-- Filter Section -->
+  <div class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>Order Type</mat-label>
+      <mat-select [(ngModel)]="selectedOrderType" (selectionChange)="applyFilters()">
+        <mat-option value="all">All</mat-option>
+        <mat-option value="internal">Internal</mat-option>
+        <mat-option value="supplier">Supplier</mat-option>
+      </mat-select>
+    </mat-form-field>
+ 
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="selectedStatus" (selectionChange)="applyFilters()">
+        <mat-option value="">All</mat-option>
+        <mat-option value="PENDING">Pending</mat-option>
+        <mat-option value="APPROVED">Approved</mat-option>
+        <mat-option value="DELIVERED">Delivered</mat-option>
+        <mat-option value="CANCELLED">Cancelled</mat-option>
+      </mat-select>
+    </mat-form-field>
+ 
+<!-- <mat-form-field appearance="outline" class="filter-field">
+  <mat-label>Filter by Supplier</mat-label>
+  <mat-select [(ngModel)]="selectedSupplier" (selectionChange)="applyFilters()">
+    <mat-option value="">All Suppliers</mat-option>
+    <mat-option *ngFor="let supplier of uniqueSuppliers" [value]="supplier">{{ supplier }}</mat-option>
+  </mat-select>
+</mat-form-field> -->
+ 
+ 
+ 
+    <mat-form-field appearance="outline">
+      <mat-label>Order Date</mat-label>
+      <input matInput [matDatepicker]="picker" [formControl]="dateControl" (dateChange)="filterByDate()">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+ 
+  <mat-progress-spinner *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
+ 
+  <!-- Sort Section -->
+<div class="sort-controls">
+  <mat-form-field appearance="fill">
+    <mat-label>Sort By</mat-label>
+    <mat-select [(ngModel)]="sortField" (selectionChange)="applyFilters()">
+      <mat-option value="poId">Order ID</mat-option>
+      <mat-option value="poOrderDate">Order Date</mat-option>
+      <mat-option value="poExpectedDeliveryDate">Expected Delivery</mat-option>
+    </mat-select>
+  </mat-form-field>
+ 
+  <mat-button-toggle-group [(ngModel)]="sortDirection" (change)="applyFilters()" appearance="legacy">
+    <mat-button-toggle value="asc">Ascending</mat-button-toggle>
+    <mat-button-toggle value="desc">Descending</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+ 
+ 
+  <!-- Orders List -->
+  <div *ngIf="!isLoading && filteredOrders.length === 0" class="no-orders">
+    <p>No orders found.</p>
+  </div>
+ 
+  <div *ngIf="!isLoading">
+    <mat-accordion multi>
+      <mat-expansion-panel *ngFor="let order of filteredOrders">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Order ID: {{ order.poId }} | {{ order.supplierName }}
+          </mat-panel-title>
+          <mat-panel-description>
+            Ordered By: {{ order.orderedBy }} | {{ order.poOrderDate | date }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+ 
+        <div class="order-details">
+          <p><strong>Expected Delivery:</strong> {{ order.poExpectedDeliveryDate | date }}</p>
+          <p><strong>Delivery Status:</strong> {{ order.poDeliveryStatus }}</p>
+ 
+          <h4>Items:</h4>
+          <table mat-table [dataSource]="order.items" class="mat-elevation-z2 full-width-table">
+            <ng-container matColumnDef="productName">
+              <th mat-header-cell *matHeaderCellDef> Product </th>
+              <td mat-cell *matCellDef="let item"> {{ item.productName }} </td>
+            </ng-container>
+ 
+            <ng-container matColumnDef="quantity">
+              <th mat-header-cell *matHeaderCellDef> Quantity </th>
+              <td mat-cell *matCellDef="let item"> {{ item.quantity }} </td>
+            </ng-container>
+ 
+            <!-- Unit Price Column (NEW) -->
+            <ng-container matColumnDef="unitPrice">
+             <th mat-header-cell *matHeaderCellDef> Unit Price </th>
+             <td mat-cell *matCellDef="let item"> ₹{{ item.unitPrice }} </td>
+            </ng-container>
+ 
+            <ng-container matColumnDef="cost">
+              <th mat-header-cell *matHeaderCellDef> Cost </th>
+              <td mat-cell *matCellDef="let item"> ₹{{ item.cost }} </td>
+            </ng-container>
+ 
+            <tr mat-header-row *matHeaderRowDef="['productName', 'quantity', 'cost']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['productName', 'quantity', 'cost']"></tr>
+          </table>
+ 
+          <!-- Action Buttons -->
+          <div class="actions">
+            <!-- <button mat-raised-button color="primary" (click)="updateOrder(order.poId)">
+              <mat-icon>edit</mat-icon> Update
+            </button> -->
+            <!-- <button mat-raised-button color="warn" (click)="cancelOrder(order.poId)">
+              <mat-icon>cancel</mat-icon> Cancel
+            </button> -->
+            <button mat-raised-button color="accent" (click)="downloadInvoice(order.poId, order.supplierName)">
+              <mat-icon>download</mat-icon> Invoice
+            </button>
+            <button mat-raised-button color="primary" [routerLink]="['/procurement/track-order', order.poId]">
+              <mat-icon>local_shipping</mat-icon> Track Order
+            </button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</mat-card>
+ 
+ 
+ 

@@ -1,0 +1,89 @@
+<div class="order-form-container">
+  <h2>Request Supplier Order</h2>
+
+  <form [formGroup]="orderForm" (ngSubmit)="submitOrder()">
+
+    <!-- Supplier Dropdown -->
+    <label for="supplier">Supplier:</label>
+    <select formControlName="supplierId" id="supplier" required>
+      <option value="" disabled>Select Supplier</option>
+      <option *ngFor="let supplier of suppliers" [value]="supplier.id">
+        {{ supplier.name }}
+      </option>
+    </select>
+    <div *ngIf="orderForm.get('supplierId')?.invalid && orderForm.get('supplierId')?.touched" class="error">
+      Supplier is required.
+    </div>
+
+
+    <!-- Items Section -->
+    <div formArrayName="items">
+      <div *ngFor="let item of orderItems.controls; let i = index" [formGroupName]="i" class="raw-material-group">
+
+        <!-- Raw Material Dropdown -->
+
+        <label for="rWId-{{ i }}">Raw Material:</label>
+        <select
+          formControlName="rWId"
+          id="rWId-{{ i }}"
+          (change)="onRawMaterialSelected(i)"
+          required
+        >
+          <option value="">-- Select Raw Material --</option>
+          <option *ngFor="let rm of rawMaterials" [value]="rm.rwId">
+            {{ rm.rwName }}
+          </option>
+        </select>
+        <div *ngIf="item.get('rWId')?.invalid && item.get('rWId')?.touched" class="error">
+          Raw material is required.
+        </div>
+
+
+        <!-- Quantity -->
+
+        <label for="quantity-{{ i }}">Quantity:</label>
+        <input
+          type="number"
+          formControlName="quantity"
+          id="quantity-{{ i }}"
+          min="1"
+          required
+          (input)="onQuantityChanged(i)"
+        >
+        <div *ngIf="item.get('quantity')?.invalid && item.get('quantity')?.touched" class="error">
+          Quantity is required and must be greater than 0.
+        </div>
+
+
+        <!-- Auto-calculated Cost -->
+
+        <label for="cost-{{ i }}">Cost:</label>
+        <input
+          type="number"
+          formControlName="cost"
+          id="cost-{{ i }}"
+          readonly
+        >
+
+        <!-- Remove Button -->
+        <button type="button" (click)="removeItem(i)" *ngIf="orderItems.length > 1">Remove</button>
+      </div>
+
+      <!-- Add New Raw Material -->
+      <button type="button" (click)="addItem()">+ Add Raw Material</button>
+    </div>
+
+    <!-- Expected Delivery Date -->
+
+    <label for="expectedDeliveryDate">Expected Delivery Date:</label>
+    <input type="date" formControlName="expectedDeliveryDate" id="expectedDeliveryDate" required>
+    <div *ngIf="orderForm.get('expectedDeliveryDate')?.invalid && orderForm.get('expectedDeliveryDate')?.touched" class="error">
+      Delivery date is required.
+    </div>
+
+
+    <!-- Submit -->
+
+    <button type="submit" [disabled]="orderForm.invalid">Submit Order</button>
+  </form>
+</div>

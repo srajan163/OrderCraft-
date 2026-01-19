@@ -1,0 +1,121 @@
+<div class="container mt-4">
+
+  <h2 class="mb-4 text-center">📈 Production Efficiency Report</h2>
+
+  <!-- Filter Card -->
+  <div class="card shadow-sm p-4 mb-4 analytics-card">
+
+    <h5 class="mb-3">Filter Criteria</h5>
+
+    <div class="row g-3">
+
+      <!-- Unit ID -->
+      <div class="col-md-4">
+        <label class="form-label fw-semibold">Unit ID (Optional)</label>
+        <input type="number" class="form-control" [(ngModel)]="unitId" placeholder="Enter Unit ID">
+      </div>
+
+      <!-- Start Date -->
+      <div class="col-md-4">
+        <label class="form-label fw-semibold">Start Date</label>
+        <input type="date" class="form-control" [(ngModel)]="startDate">
+      </div>
+
+      <!-- End Date -->
+      <div class="col-md-4">
+        <label class="form-label fw-semibold">End Date</label>
+        <input type="date" class="form-control" [(ngModel)]="endDate">
+      </div>
+
+    </div>
+
+    <div class="mt-4 text-center">
+      <button class="btn btn-primary px-4" (click)="generateReport()">Generate Report</button>
+      <button class="btn btn-success px-4 ms-2" (click)="generateAllReports()">All Units Report</button>
+    </div>
+
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center py-3">
+    <p class="text-info">Loading efficiency data...</p>
+  </div>
+
+  <!-- Single Unit Report -->
+  <div *ngIf="report && !loading">
+
+    <h4 class="text-center mb-3">Unit {{ report.unitId }} – Efficiency Overview</h4>
+
+    <!-- Summary Cards -->
+    <div class="row g-3 mb-4">
+
+      <div class="col-6 col-md-3" *ngFor="let card of [
+        { title: 'Total Schedules', value: report.totalSchedules },
+        { title: 'Completed', value: report.completedSchedules },
+        { title: 'Hold', value: report.holdSchedules },
+        { title: 'Delayed', value: report.delayedSchedules }
+      ]">
+        <div class="card text-center shadow-sm p-3 analytics-card">
+          <h6>{{ card.title }}</h6>
+          <h3 class="text-primary">{{ card.value }}</h3>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3" *ngFor="let card of [
+        { title: 'Efficiency %', value: report.efficiency.toFixed(1) },
+        { title: 'Avg Duration (days)', value: report.avgDuration.toFixed(1) },
+        { title: 'Units Produced', value: report.totalProduced },
+        { title: 'Utilization %', value: report.utilization.toFixed(1) }
+      ]">
+        <div class="card text-center shadow-sm p-3 analytics-card">
+          <h6>{{ card.title }}</h6>
+          <h3 class="text-success">{{ card.value }}</h3>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Chart -->
+    <div class="card shadow-sm p-4 mb-4 analytics-card">
+      <h5 class="text-center mb-3">Performance Chart</h5>
+
+      <canvas baseChart
+              [data]="singleUnitChartData"
+              [options]="singleUnitOptions"
+              chartType="bar">
+      </canvas>
+    </div>
+
+    <!-- Raw JSON Data -->
+    <div class="card shadow-sm p-3 analytics-card">
+      <h6 class="fw-semibold">Raw Data</h6>
+      <pre>{{ report | json }}</pre>
+    </div>
+
+  </div>
+
+  <!-- All Units Report -->
+  <div *ngIf="allReports.length > 0 && !loading" class="mt-5">
+
+    <h4 class="text-center mb-3">All Units – Comparison Report</h4>
+
+    <!-- Chart -->
+    <div class="card shadow-sm p-4 analytics-card mb-4">
+      <h5 class="text-center mb-3">Units Comparison Chart</h5>
+
+      <canvas baseChart
+              [data]="allUnitsChartData"
+              [options]="allUnitsOptions"
+              chartType="bar">
+      </canvas>
+    </div>
+
+    <!-- Raw JSON -->
+    <div class="card shadow-sm p-3 analytics-card">
+      <h6 class="fw-semibold">Raw Data</h6>
+      <pre>{{ allReports | json }}</pre>
+    </div>
+
+  </div>
+
+</div>

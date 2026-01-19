@@ -1,0 +1,49 @@
+<div class="container">
+  <h2>🏭 Production Scheduling</h2>
+
+  <!-- Creation of Production Order -->
+  <form [formGroup]="scheduleForm" (ngSubmit)="submitSchedule()" class="form">
+    <label>Product:</label>
+    <select formControlName="productId">
+      <option value="" disabled selected>Select a product</option>
+      <option *ngFor="let p of products" [value]="p.productsId">
+        {{ p.productsName }} (Stock: {{ p.productsQuantity }})
+      </option>
+    </select>
+
+    <label>Quantity:</label>
+    <input type="number" formControlName="quantity" />
+
+    <label>Start Date:</label>
+    <input type="datetime-local" formControlName="startDate" />
+
+    <label>End Date:</label>
+    <input type="datetime-local" formControlName="endDate" />
+
+    <label>Performed By:</label>
+    <input type="text" formControlName="performedBy" />
+
+    <button type="submit" [disabled]="scheduleForm.invalid">➕ Create Order</button>
+  </form>
+
+  <hr />
+
+  <!-- Complete Order -->
+  <div class="complete-section">
+    <h3>✅ Complete Production Order</h3>
+    <input type="number" [(ngModel)]="completeId" placeholder="Enter Schedule ID" />
+    <button (click)="completeOrder()" [disabled]="!completeId">Complete</button>
+  </div>
+
+  <p class="message">{{ message }}</p>
+
+  <hr />
+
+  <!-- All Products -->
+  <h3>📦 All Products</h3>
+  <ul>
+    <li *ngFor="let p of products">
+      {{ p.productsName }} - Qty: {{ p.productsQuantity }} (Min: {{ p.minThreshold }})
+    </li>
+  </ul>
+</div>

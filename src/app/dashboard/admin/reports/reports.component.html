@@ -1,0 +1,65 @@
+<!-- Supplier Performance Report Section -->
+<section class="report-card">
+  <div class="report-header">
+    <h2>Supplier Performance Report</h2>
+
+    <div class="report-actions">
+      <button class="btn pdf-btn" (click)="downloadSupplierPDF()">
+        📄 PDF
+      </button>
+      <button class="btn excel-btn" (click)="downloadSupplierExcel()">
+        📊 Excel
+      </button>
+    </div>
+  </div>
+
+  <div class="report-body" *ngIf="supplierReport">
+
+    <div class="report-grid">
+      <div class="report-item">
+        <label>Supplier Name</label>
+        <p>{{ supplierReport.supplierName }}</p>
+      </div>
+
+      <div class="report-item">
+        <label>Email</label>
+        <p>{{ supplierReport.supplierEmail }}</p>
+      </div>
+
+      <div class="report-item">
+        <label>Phone</label>
+        <p>{{ supplierReport.supplierPhone }}</p>
+      </div>
+
+      <div class="report-item">
+        <label>Average Rating</label>
+        <p>{{ supplierReport.averageRating }}</p>
+      </div>
+
+      <div class="report-item">
+        <label>Total Reviews</label>
+        <p>{{ supplierReport.totalReviews }}</p>
+      </div>
+    </div>
+
+    <!-- Rating Breakdown -->
+    <h3 class="sub-title">Rating Breakdown</h3>
+    <table class="report-table">
+      <thead>
+        <tr>
+          <th>Rating</th>
+          <th>Count</th>
+          <th>Percentage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of supplierReport.ratingCounts | keyvalue">
+          <td>{{ r.key }}</td>
+          <td>{{ r.value }}</td>
+          <td>{{ supplierReport.ratingPercentages[r.key] }}%</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</section>

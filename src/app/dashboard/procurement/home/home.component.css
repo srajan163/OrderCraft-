@@ -1,0 +1,129 @@
+.home-container {
+  text-align: center;
+  padding: 40px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.home-container h1 {
+  font-size: 2rem;
+  color: #0d47a1;
+  margin-bottom: 10px;
+}
+
+.home-container p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto 40px auto;
+}
+
+.card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-size: 1.1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.card-header .icon {
+  font-size: 1.5rem;
+}
+
+.card h2 {
+  font-size: 1rem;
+  color: #333;
+  margin: 0;
+}
+
+.card .metric {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #0d47a1;
+  margin-bottom: 10px;
+}
+
+.trend-bar {
+  height: 6px;
+  background: #eee;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.trend-fill {
+  height: 100%;
+  background: #0d47a1;
+  border-radius: 3px;
+}
+
+.trend-text {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.card.pending .metric,
+.card.pending .trend-fill {
+  color: #ff9800;
+  background: #ff9800;
+}
+
+.card.completed .metric,
+.card.completed .trend-fill {
+  color: #4caf50;
+  background: #4caf50;
+}
+
+.card.returns .metric,
+.card.returns .trend-fill {
+  color: #f44336;
+  background: #f44336;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* ✅ Supplier Management Button */
+.button-container {
+  margin-top: 30px;
+}
+
+.supplier-btn {
+  background-color: #673ab7;
+  color: white;
+  border: none;
+  padding: 14px 30px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 3px 8px rgba(103, 58, 183, 0.3);
+}
+
+.supplier-btn:hover {
+  background-color: #5e35b1;
+  transform: translateY(-2px);
+}
+
+.supplier-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(103, 58, 183, 0.3);
+}

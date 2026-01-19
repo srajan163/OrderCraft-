@@ -1,0 +1,14 @@
+.analytics-card {
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+}
+
+.analytics-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.schedule-card h3 { color: #1d4ed8; }
+.unit-card h3 { color: #16a34a; }
+.duration-card h3 { color: #f59e0b; }

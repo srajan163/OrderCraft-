@@ -1,0 +1,120 @@
+/* Table base styling with subtle row animation */
+.tracking-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+ 
+.tracking-table th, .tracking-table td {
+  padding: 14px;
+  border: 1px solid #e0e0e0;
+  text-align: center;
+  transition: background 0.25s ease-in-out;
+}
+ 
+.tracking-table th {
+  background: #f1f3f6;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+ 
+.tracking-table tr:nth-child(even) {
+  background: #fafafa;
+}
+ 
+.tracking-table tr:hover {
+  background: #f9f9ff; /* subtle highlight on hover */
+}
+ 
+/* Custom select wrapper with arrow */
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: auto;
+}
+ 
+/* Custom arrow using ::after */
+.custom-select-wrapper::after {
+  content: '▾';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #555;
+  font-size: 12px;
+  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+ 
+/* Animate arrow on hover */
+.custom-select-wrapper:hover::after {
+  transform: translateY(-50%) rotate(180deg);
+  color: #000;
+}
+ 
+/* Make select look like a button */
+.status-select.custom-button {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 6px 28px 6px 14px;
+  border-radius: 20px;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #333;
+  background-color: #e0e0e0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.25s ease-in-out;
+  min-width: 150px;
+  text-align: center;
+}
+ 
+.status-select.custom-button:hover {
+  box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+  background-color: #d6d6d6;
+  transform: translateY(-1px);
+}
+ 
+.status-select.custom-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.25);
+}
+ 
+/* Yellow highlight when CREATED is active */
+.created-select {
+  background-color: #fff9e6 !important;
+  border: 1px solid #ffcc00 !important;
+  color: #333 !important;
+  transition: background 0.3s ease-in-out, border 0.3s ease-in-out;
+}
+ 
+/* Attempt to style CREATED option (works in some browsers) */
+.created-option {
+  background-color: #fff9e6 !important;
+  color: #333 !important;
+}
+ 
+/* Completed badge with animated hover */
+.status-badge.completed {
+  background: linear-gradient(90deg, #4caf50, #8bc34a);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 13px;
+  display: inline-block;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+ 
+.status-badge.completed:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+ 
+ 

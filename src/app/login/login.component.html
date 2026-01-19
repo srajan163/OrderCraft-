@@ -1,0 +1,42 @@
+<!-- Background -->
+<div class="background">
+  <div class="overlay fade-in">
+    <div class="project-title">
+      <h1>Inventory Management System</h1>
+    </div>
+ 
+ 
+    <div class="login-box slide-in">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <h2>🔐 Secure Login</h2>
+ 
+        <div class="form-group">
+          <label for="username">Email</label>
+          <input type="text" id="username" formControlName="username" placeholder="Enter your email" />
+        </div>
+ 
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" formControlName="password" placeholder="Enter your password" />
+        </div>
+ 
+         <div class="form-group" *ngIf="isBrowser">
+          <ngx-recaptcha2
+            formControlName="recaptcha"
+            [siteKey]="siteKey">
+          </ngx-recaptcha2>
+        </div>
+        <!-- login page -->
+ 
+        <button type="submit" [disabled]="loginForm.invalid" class="btn-login">Login</button>
+ 
+        <p class="error" *ngIf="loginError">{{ loginError }}</p>
+      </form>
+ 
+      <button type="button" class="forgot-btn" (click)="navigateToForgotPassword()">Forgot Password?</button>
+    </div>
+  </div>
+</div>
+ 
+ 
+ 

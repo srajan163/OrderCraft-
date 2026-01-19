@@ -1,0 +1,70 @@
+<div class="container">
+
+  <h2>Supplier Management</h2>
+
+  <!-- Search -->
+  <input class="search-box" placeholder="Search suppliers..."
+         [(ngModel)]="searchText" />
+
+  <button class="add-btn" (click)="openAddForm()">➕ Add Supplier</button>
+
+
+  <!-- Form (Add / Edit) -->
+  <div class="form-card">
+
+    <h3>{{ isEditing ? "Edit Supplier" : "Add Supplier" }}</h3>
+
+    <div class="form-grid">
+
+      <input placeholder="Supplier Name" [(ngModel)]="form.suppliersName">
+      <input placeholder="Phone" [(ngModel)]="form.suppliersPhone">
+      <input placeholder="Email" [(ngModel)]="form.suppliersEmail">
+      <input placeholder="Contact Person" [(ngModel)]="form.suppliersContactPerson">
+
+      <input placeholder="Street" [(ngModel)]="form.supplierAddress.addressStreet">
+      <input placeholder="City" [(ngModel)]="form.supplierAddress.addressCity">
+      <input placeholder="State" [(ngModel)]="form.supplierAddress.addressState">
+      <input placeholder="Country" [(ngModel)]="form.supplierAddress.addressCountry">
+      <input placeholder="Postal Code" [(ngModel)]="form.supplierAddress.addressPostalCode">
+
+    </div>
+
+    <button class="save-btn" (click)="saveSupplier()">
+      {{ isEditing ? "Update Supplier" : "Save Supplier" }}
+    </button>
+
+    <button class="cancel-btn" (click)="resetForm()">Cancel</button>
+
+  </div>
+
+
+  <!-- Supplier Table -->
+  <table class="supplier-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Contact</th>
+        <th>City</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let s of filteredSuppliers">
+        <td>{{ s.suppliersName }}</td>
+        <td>{{ s.suppliersPhone }}</td>
+        <td>{{ s.suppliersEmail }}</td>
+        <td>{{ s.suppliersContactPerson }}</td>
+        <td>{{ s.supplierAddress.addressCity }}</td>
+
+        <td>
+          <button class="edit-btn" (click)="openEditForm(s)">✏ Edit</button>
+          <button class="delete-btn" (click)="deleteSupplier(s.suppliersId!)">🗑 Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

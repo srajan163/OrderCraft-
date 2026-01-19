@@ -1,0 +1,165 @@
+<!-- compact topbar (matches admin header visual language) -->
+<header class="topbar profile-topbar" role="banner" aria-label="Profile header">
+  <div class="logo-area">
+    <img src="/assets/logo.png" alt="OrderCraft logo" class="logo" />
+    <div class="logo-text">
+      <h1>OrderCraft</h1>
+      <span>User Profile</span>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="logout-btn" aria-label="Logout" (click)="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+      <span class="btn-text">Logout</span>
+    </button>
+  </div>
+</header>
+
+<!-- compact centered card -->
+<main class="profile-wrapper" *ngIf="!loading(); else loadingTpl">
+  <mat-card class="profile-card" elevation="2">
+    <div class="profile-header">
+
+      <!-- Avatar section -->
+      <div class="profile-left">
+        <div class="image-container">
+          <img [src]="previewImage() || imageUrl()" alt="Profile Image" class="profile-image" />
+
+          <div *ngIf="isEditing()" class="image-actions">
+            <input type="file" #fileInput hidden (change)="onFileSelected($event)" />
+            <button mat-stroked-button color="primary" (click)="fileInput.click()" class="small-btn">Upload</button>
+            <button mat-stroked-button color="warn" (click)="removeImage()" class="small-btn">Remove</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- User info -->
+      <div class="profile-info">
+        <h2 class="profile-name">
+          {{ user()?.userFullName || "User Profile" }}
+        </h2>
+
+        <div class="role-badge">
+          {{ user()?.role?.roleName || "USER" }}
+        </div>
+
+        <div class="meta-row">
+          <div class="meta-item"><strong>ID:</strong> {{ user()?.userId }}</div>
+          <div class="meta-item"><strong>Username:</strong> {{ user()?.userName }}</div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="profile-actions">
+        <button mat-flat-button color="primary" *ngIf="!isEditing()" (click)="toggleEdit()" class="primary-btn">
+          Edit
+        </button>
+
+        <button mat-flat-button color="accent" *ngIf="isEditing()" (click)="saveProfile()" class="primary-btn">
+          Save
+        </button>
+
+        <button mat-button *ngIf="isEditing()" (click)="toggleEdit()">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <mat-card-content class="profile-content">
+
+      <!-- Error -->
+      <p class="error" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+
+      <!-- READ ONLY VIEW -->
+      <div *ngIf="!isEditing()" class="details-grid">
+        <div class="detail">
+          <div class="label">Full Name</div>
+          <div class="value">{{ user()?.userFullName }}</div>
+        </div>
+
+        <div class="detail">
+          <div class="label">Email</div>
+          <div class="value">{{ user()?.userEmail }}</div>
+        </div>
+
+        <div class="detail">
+          <div class="label">Mobile</div>
+          <div class="value">{{ user()?.userMobile }}</div>
+        </div>
+
+        <div class="detail">
+          <div class="label">Role</div>
+          <div class="value">{{ user()?.role?.roleName }}</div>
+        </div>
+
+        <div class="detail full">
+          <div class="label">Address</div>
+          <div class="value">
+            {{ user()?.address?.addressStreet || '-' }}<br />
+            {{ user()?.address?.addressCity || '-' }},
+            {{ user()?.address?.addressState || '-' }}
+            -
+            {{ user()?.address?.addressPostalCode || '-' }}<br />
+            {{ user()?.address?.addressCountry || '-' }}
+          </div>
+        </div>
+      </div>
+
+      <!-- EDIT MODE -->
+      <form [formGroup]="profileForm" *ngIf="isEditing()" class="form-grid">
+        <mat-form-field class="full-width">
+          <mat-label>Full Name</mat-label>
+          <input matInput formControlName="userFullName" />
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="userEmail" />
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Mobile</mat-label>
+          <input matInput type="tel" formControlName="userMobile" />
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Street</mat-label>
+          <input matInput formControlName="addressStreet" />
+        </mat-form-field>
+
+        <div class="small-grid">
+          <mat-form-field class="full-width">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="addressCity" />
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <mat-label>State</mat-label>
+            <input matInput formControlName="addressState" />
+          </mat-form-field>
+        </div>
+
+        <div class="small-grid">
+          <mat-form-field class="full-width">
+            <mat-label>Postal Code</mat-label>
+            <input matInput formControlName="addressPostalCode" />
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <mat-label>Country</mat-label>
+            <input matInput formControlName="addressCountry" />
+          </mat-form-field>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</main>
+
+<ng-template #loadingTpl>
+  <div class="loading-container">
+    <mat-spinner diameter="36"></mat-spinner>
+    <p>Loading profile...</p>
+  </div>
+</ng-template>
+<!-- Changes Done -->

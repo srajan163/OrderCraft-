@@ -1,0 +1,38 @@
+
+
+ 
+ 
+<div class="reports-dashboard">
+  <div class="report-card">
+    <h3>📦 Stock Report</h3>
+    <div class="btn-group">
+      <button (click)="downloadReport('stock','pdf')" [disabled]="isLoading">PDF</button>
+      <button (click)="downloadReport('stock','csv')" [disabled]="isLoading">CSV</button>
+    </div>
+  </div>
+ 
+  <div class="report-card">
+    <h3>💰 Transaction Report</h3>
+    <div class="btn-group">
+      <button (click)="downloadReport('transaction','pdf')" [disabled]="isLoading">PDF</button>
+      <button (click)="downloadReport('transaction','csv')" [disabled]="isLoading">CSV</button>
+    </div>
+  </div>
+ 
+  <div class="report-card">
+    <h3>🏭 Production Report</h3>
+    <div class="btn-group">
+      <button (click)="downloadReport('production','pdf')" [disabled]="isLoading">PDF</button>
+      <button (click)="downloadReport('production','csv')" [disabled]="isLoading">CSV</button>
+    </div>
+  </div>
+</div>
+ 
+<!-- ✅ Loader -->
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="spinner"></div>
+  <p>Downloading {{ currentReport | titlecase }} Report...</p>
+</div>
+ 
+ 
+ 

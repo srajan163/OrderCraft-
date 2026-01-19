@@ -1,0 +1,128 @@
+<div class="form-wrapper">
+  <div class="form-container shadow-sm p-4 rounded bg-white">
+    <h2 class="mb-4 text-center">Return Order Form</h2>
+
+    <form [formGroup]="returnOrderForm" (ngSubmit)="onSubmit()">
+
+      <!-- Purchase Order ID -->
+      <div class="mb-3">
+        <label class="form-label">Purchase Order ID:</label>
+        <input 
+          class="form-control" 
+          formControlName="purchaseOrderId" 
+          type="number" 
+          required
+          (blur)="loadPurchaseOrderItems(returnOrderForm.get('purchaseOrderId')?.value)" />
+      </div>
+
+      <!-- Returned By -->
+      <div class="mb-3">
+        <label class="form-label">Returned By (User ID):</label>
+        <input 
+          class="form-control" 
+          formControlName="returnedByUserId" 
+          type="text" 
+          readonly />
+      </div>
+
+      <!-- Return Date -->
+      <div class="mb-3">
+        <label class="form-label">Return Date:</label>
+        <input 
+          class="form-control" 
+          formControlName="returnDate" 
+          type="date" 
+          required />
+      </div>
+
+      <!-- Return Reason -->
+      <div class="mb-3">
+        <label class="form-label">Return Reason:</label>
+        <textarea 
+          class="form-control" 
+          formControlName="returnReason" 
+          rows="3" 
+          required>
+        </textarea>
+      </div>
+
+      <!-- Status -->
+      <div class="mb-3">
+        <label class="form-label">Status:</label>
+        <select 
+          class="form-select" 
+          formControlName="status" 
+          required>
+          <option value="Approved">Approved</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+      </div>
+
+      <!-- Product Dropdown to Add Items -->
+      <div class="mb-3">
+        <label class="form-label">Select Product to Return:</label>
+        <select class="form-select" (change)="onProductSelect($event)">
+          <option value="">-- Choose Product --</option>
+          <option *ngFor="let p of purchaseOrderItemsList" [value]="p.purchaseOrderItemId">
+            {{ p.productName }} (Available Qty: {{ p.quantity }})
+          </option>
+        </select>
+      </div>
+
+      <!-- Add Item Button -->
+      <div class="mb-3 text-end">
+        <button class="btn btn-secondary" type="button" (click)="addItem()">+ Add Item</button>
+      </div>
+
+      <!-- Return Items -->
+      <div formArrayName="items" class="mb-4">
+        <h4>Return Items</h4>
+
+        <div *ngFor="let item of items.controls; let i = index" 
+             [formGroupName]="i" 
+             class="border p-3 mb-3 rounded bg-light">
+
+          <div class="row g-3">
+            <div class="col-md-2">
+              <label class="form-label">PO Item ID:</label>
+              <input class="form-control" formControlName="purchaseOrderItemId" type="number" readonly />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Product ID:</label>
+              <input class="form-control" formControlName="productId" type="number" readonly />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Product Name:</label>
+              <input class="form-control" formControlName="productName" type="text" readonly />
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">Quantity:</label>
+              <input class="form-control" formControlName="quantity" type="number" min="1" (input)="validateQuantity(i)" required />
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">Condition Note:</label>
+              <input class="form-control" formControlName="conditionNote" type="text" />
+            </div>
+
+            <div class="col-md-1 d-flex align-items-end">
+              <button class="btn btn-danger" type="button" (click)="removeItem(i)">🗑️</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="text-center mt-4">
+        <button class="btn btn-primary" type="submit" [disabled]="returnOrderForm.invalid">
+          Submit Return Order
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+

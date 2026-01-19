@@ -1,0 +1,119 @@
+<div class="min-h-screen flex flex-col bg-slate-50">
+ 
+  <!-- Header -->
+  <app-header
+    [title]="'Login'"
+    [subtitle]="'Access your account'"
+    [icon]="header.User">
+  </app-header>
+ 
+  <!-- Page Title (moved outside the card) -->
+  <div class="text-center mt-12 mb-6 px-4">
+    <h1 class="text-3xl font-bold text-slate-800">Sign in to your account</h1>
+    <p class="text-slate-500 text-base mt-2">Access your dashboard and manage your inventory</p>
+  </div>
+ 
+  <!-- Main Content -->
+  <main class="flex-grow flex items-center justify-center px-4">
+    <div class="max-w-md w-full bg-white p-8 rounded-2xl shadow-lg">
+ 
+      <!-- Error Alert -->
+      <div *ngIf="error" class="bg-red-50 border border-red-200 text-red-700 p-3 rounded-md mb-4 text-sm">
+        {{ error }}
+      </div>
+ 
+      <!-- Login Form -->
+      <form (ngSubmit)="handleSubmit($event)">
+        <!-- Email -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+          <input
+            type="email"
+            [(ngModel)]="formData.email"
+            (ngModelChange)="handleInputChange()"
+            name="email"
+            class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+            placeholder="you@example.com"
+            required
+          />
+        </div>
+ 
+        <!-- Password -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
+          <div class="relative">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              [(ngModel)]="formData.password"
+              (ngModelChange)="handleInputChange()"
+              name="password"
+              class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+              placeholder="••••••••"
+              required
+            />
+            <button
+              type="button"
+              (click)="showPassword = !showPassword"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none"
+            >
+              <span *ngIf="showPassword">Hide</span>
+              <span *ngIf="!showPassword">Show</span>
+            </button>
+          </div>
+        </div>
+ 
+        <!-- Captcha -->
+        <div class="recaptcha mb-4">
+          <ngx-recaptcha2
+            *ngIf="isBrowser"
+            [siteKey]="siteKey"
+            (success)="handleCaptchaSuccess($event)">
+          </ngx-recaptcha2>
+        </div>
+ 
+        <!-- Remember Me + Forgot Password -->
+        <div class="flex items-center justify-between mb-4">
+          <label class="flex items-center text-sm text-slate-600">
+            <input
+              type="checkbox"
+              [(ngModel)]="formData.rememberMe"
+              name="rememberMe"
+              (ngModelChange)="handleInputChange()"
+              class="mr-2 rounded border-slate-300"
+            />
+            Remember me
+          </label>
+          <a href="/forgot-password" class="text-sm text-blue-600 hover:underline">Forgot password?</a>
+        </div>
+ 
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          [disabled]="!isFormValid || isLoading"
+          class="w-full py-2 px-4 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 focus:outline-none disabled:bg-blue-300"
+        >
+          <span *ngIf="!isLoading">Login</span>
+          <span *ngIf="isLoading">Logging in...</span>
+        </button>
+      </form>
+ 
+      <!-- Divider -->
+      <div class="mt-6 flex items-center">
+        <div class="flex-grow border-t border-slate-200"></div>
+        <span class="px-2 text-sm text-slate-400">or</span>
+        <div class="flex-grow border-t border-slate-200"></div>
+      </div>
+ 
+      <!-- Register Redirect -->
+      <p class="mt-4 text-center text-sm text-slate-600">
+        Don’t have an account?
+        <a href="/register" class="text-blue-600 hover:underline font-medium">Sign up</a>
+      </p>
+    </div>
+  </main>
+ 
+  <!-- Footer -->
+  <app-footer class="mt-12"></app-footer>
+</div>
+ 
+ 

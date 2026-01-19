@@ -1,0 +1,52 @@
+<div class="order-form-container">
+  <h2>Customer Order</h2>
+
+  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <!-- Customer Name -->
+    <div class="form-group">
+      <label>Name:</label>
+      <input type="text" formControlName="customerName" />
+      <span *ngIf="f['customerName'].touched && f['customerName'].invalid">Name is required</span>
+    </div>
+
+    <!-- Customer Email -->
+    <div class="form-group">
+      <label>Email:</label>
+      <input type="email" formControlName="customerEmail" />
+      <span *ngIf="f['customerEmail'].touched && f['customerEmail'].invalid">
+        {{ f['customerEmail'].errors?.['required'] ? 'Email is required' : 'Invalid email format' }}
+      </span>
+    </div>
+
+    <!-- Customer Mobile -->
+    <div class="form-group">
+      <label>Mobile:</label>
+      <input type="text" formControlName="customerMobile" />
+      <span *ngIf="f['customerMobile'].touched && f['customerMobile'].invalid">10-digit mobile required</span>
+    </div>
+
+    <!-- Customer Address -->
+    <div class="form-group">
+      <label>Address:</label>
+      <textarea formControlName="customerAddress"></textarea>
+      <span *ngIf="f['customerAddress'].touched && f['customerAddress'].invalid">Address is required</span>
+    </div>
+
+    <!-- Order Items -->
+    <div formArrayName="items" class="item-section">
+      <label style="margin-top: 12px;">Items:</label>
+      <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="item-group">
+        <input type="number" formControlName="productId" placeholder="Product ID" />
+        <input type="number" formControlName="quantity" placeholder="Quantity" />
+        <button type="button" (click)="removeItem(i)" *ngIf="items.length > 1">Remove</button>
+      </div>
+      <button type="button" (click)="addItem()">+ Add Item</button>
+    </div>
+
+    <button type="submit">Submit Customer Order</button>
+  </form>
+</div>
+
+<footer class="form-footer">
+  © 2025 Inventory Management System
+</footer>

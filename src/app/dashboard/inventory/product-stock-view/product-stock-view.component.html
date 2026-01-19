@@ -1,0 +1,51 @@
+<div class="stock-container">
+  <h2>Product Stock View</h2>
+ 
+  <div *ngIf="isLoading" class="loading">Loading stock data...</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+ 
+  <table *ngIf="!isLoading && !errorMessage && stockList.length > 0">
+    <thead>
+      <tr>
+        <th>Product ID</th>
+        <th>Product Name</th>
+        <th>Available Quantity</th>
+        <th>Alert</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let stock of stockList">
+        <td>{{ stock.productId }}</td>
+        <td>{{ stock.productName }}</td>
+ 
+        <!-- Quantity badge -->
+        <td>
+          <span
+            [ngClass]="{
+              'badge-red': stock.availableQuantity < stock.minThreshold,
+              'badge-yellow': stock.availableQuantity > stock.maxThreshold,
+              'badge-green': !(stock.availableQuantity < stock.minThreshold) && !(stock.availableQuantity > stock.maxThreshold)
+            }">
+            {{ stock.availableQuantity }}
+          </span>
+        </td>
+ 
+       
+ 
+        <!-- Alert badge -->
+        <td>
+          <span
+            [ngClass]="{
+              'badge-red': stock.alert === 'Below Minimum Threshold',
+              'badge-yellow': stock.alert === 'Above Maximum Threshold',
+              'badge-green': stock.alert === 'Normal'
+            }">
+            {{ stock.alert }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+ 
+ 

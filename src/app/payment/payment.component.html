@@ -1,0 +1,53 @@
+<!-- Payment Options -->
+<div class="card shadow" *ngIf="showPaymentOptions">
+  <div class="card-header bg-primary text-white">
+    <h4 class="mb-0">Pay for Order #{{ orderId }}</h4>
+  </div>
+  <div class="card-body">
+ 
+    <!-- Manual Amount Entry -->
+    <div class="mb-4">
+      <label for="amount" class="form-label">Enter Amount</label>
+      <input
+        type="number"
+        class="form-control"
+        id="amount"
+        [(ngModel)]="amount"
+        placeholder="Enter amount to pay"
+        min="1"
+      />
+    </div>
+ 
+    <!-- Payment Methods -->
+    <p class="mb-3">Choose a payment method:</p>
+ 
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" id="upi" name="method" value="upi" [(ngModel)]="paymentMethod" />
+      <label class="form-check-label" for="upi">UPI</label>
+    </div>
+ 
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" id="card" name="method" value="card" [(ngModel)]="paymentMethod" />
+      <label class="form-check-label" for="card">Credit/Debit Card</label>
+    </div>
+ 
+    <div class="form-check mb-4">
+      <input class="form-check-input" type="radio" id="wallet" name="method" value="wallet" [(ngModel)]="paymentMethod" />
+      <label class="form-check-label" for="wallet">Wallet</label>
+    </div>
+ 
+    <button
+      class="btn btn-success w-100"
+      [disabled]="!paymentMethod || amount <= 0"
+      (click)="processPayment()">
+      Pay ₹{{ amount.toFixed(2) }} Now
+    </button>
+  </div>
+</div>
+ 
+<!-- Payment Done -->
+<div class="alert alert-success mt-4" *ngIf="paymentDone">
+  <h4 class="alert-heading">Payment Successful!</h4>
+  <p>Your payment of ₹{{ amount.toFixed(2) }} was received. Thank you!</p>
+</div>
+ 

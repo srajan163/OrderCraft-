@@ -1,0 +1,75 @@
+
+<div class="container">
+  <h2 align = "left">📦 Add Product</h2>
+ 
+  <!-- Add Product Form -->
+  <form (ngSubmit)="addProduct()" class="form">
+    <div class="form-row">
+      <input type="text" [(ngModel)]="newProduct.productsName" name="name" placeholder="Name" required />
+      <input type="number" [(ngModel)]="newProduct.productsUnitPrice" name="price" placeholder="Enter price" required />
+      <input type="number" [(ngModel)]="newProduct.productsQuantity" name="qty" placeholder="Enter quantity" required />
+       <!-- ⭐ NEW -->
+    <input
+      type="number"
+      [(ngModel)]="newProduct.minThreshold"
+      name="minThreshold"
+      placeholder="Min Threshold"
+      required />
+
+    <!-- ⭐ NEW -->
+    <input
+      type="number"
+      [(ngModel)]="newProduct.maxThreshold"
+      name="maxThreshold"
+      placeholder="Max Threshold"
+      required />
+      <button type="submit">➕ Submit</button>
+    </div>
+  </form>
+ 
+  <!-- Product List -->
+  <h3 align ="left">Available Products</h3>
+  <ul class="product-list">
+    <li *ngFor="let product of products" class="product-item">
+      <div class="product-info">
+        <b>{{ product.productsName }}</b> - {{ product.productsUnitPrice | currency:'INR':'symbol':'1.0-0' }}
+        <span>(Qty: {{ product.productsQuantity }})</span>
+
+         <div class="threshold-info">
+            Min: {{ product.minThreshold }} |
+            Max: {{ product.maxThreshold }}
+        </div>
+      </div>
+ 
+      <div class="selectors">
+        <!-- Category -->
+        <label>
+          Category:
+          <select
+            [ngModel]="product.category ? product.category.categoryId : null"
+            name="category-{{ product.productsId }}"
+            (ngModelChange)="assignCategory(product.productsId!, $event)">
+            <option [ngValue]="null">-- Select Category --</option>
+            <option *ngFor="let cat of categories" [ngValue]="cat.categoryId">{{ cat.categoryName }}</option>          
+          </select>
+        </label>
+ 
+        <!-- Supplier -->
+        <label>
+          Supplier:
+          <select 
+            [ngModel]="product.supplier ? product.supplier.suppliersId : null"
+            (ngModelChange)="assignSupplier(product.productsId!, $event)">
+            <option [ngValue]="null">-- Select Supplier --</option>
+            <option *ngFor="let sup of suppliers" [ngValue]="sup.suppliersId">
+            {{ sup.suppliersName }}
+            </option>
+          </select>
+        </label>
+      </div>
+ 
+    </li>
+  </ul>
+</div>
+ 
+ 

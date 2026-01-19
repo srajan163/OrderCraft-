@@ -1,0 +1,46 @@
+<h2 class="title">Category Management</h2>
+
+<form (ngSubmit)="editing ? updateCategory() : createCategory()" class="form-container">
+
+  <!-- Category Name Only -->
+  <input type="text"
+    [(ngModel)]="newCategory.categoryName"
+    name="name"
+    placeholder="Category Name"
+    required />
+
+  <button type="submit" class="btn-primary">
+    {{ editing ? 'Update Category' : 'Add Category' }}
+  </button>
+
+  <button *ngIf="editing"
+    type="button"
+    class="btn-secondary"
+    (click)="cancelEdit()">
+    Cancel
+  </button>
+
+</form>
+
+<hr />
+
+<table class="category-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th style="width: 150px;">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let c of categories">
+      <td>{{ c.categoryId }}</td>
+      <td>{{ c.categoryName }}</td>
+      <td>
+        <button class="btn-edit" (click)="editCategory(c)">Edit</button>
+        <button class="btn-delete" (click)="confirmDelete(c.categoryId!)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

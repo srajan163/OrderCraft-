@@ -1,0 +1,80 @@
+<footer class="footer bg-slate-800 text-slate-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8"> 
+      <!-- Contact Information -->
+      <div>
+        <h4 class="text-white font-semibold mb-4">Contact Information</h4>
+        <div class="space-y-2">
+          <div class="flex items-center space-x-2">
+            <lucide-icon [img]="icons.Mail" class="w-4 h-4"></lucide-icon>
+            <span class="text-sm">support&#64;company.com</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <lucide-icon [img]="icons.Phone" class="w-4 h-4"></lucide-icon>
+            <span class="text-sm">+1 (555) 123-4567</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <lucide-icon [img]="icons.Globe" class="w-4 h-4"></lucide-icon>
+            <span class="text-sm">IT Helpdesk: ext. 2847</span>
+          </div>
+        </div>
+      </div>
+      <!-- Legal & Policies... -->
+      <div>
+        <h4 class="text-white font-semibold mb-4">Legal & Policies</h4>
+        <div class="space-y-2">
+          <a href="/privacy" class="block text-sm hover:text-white transition-colors">
+            Privacy Policy
+          </a>
+          <a href="/terms" class="block text-sm hover:text-white transition-colors">
+            Terms of Service
+          </a>
+          <a href="/compliance" class="block text-sm hover:text-white transition-colors">
+            Compliance
+          </a>
+          <a href="/security" class="block text-sm hover:text-white transition-colors">
+            Security Policy
+          </a>
+        </div>
+      </div>
+      <!-- System Information -->
+      <div>
+        <h4 class="text-white font-semibold mb-4">System Information</h4>
+        <div class="space-y-2">
+          <div class="text-sm">
+            <span class="font-medium">Version:</span> v{{ environment.version }}
+          </div>
+          <div class="text-sm">
+            <span class="font-medium">Environment:</span>
+            <span
+              class="ml-1 px-2 py-1 rounded text-xs font-medium"
+              [ngClass]="{
+                'bg-blue-600 text-white': environment.envName === 'DEV',
+                'bg-amber-600 text-white': environment.envName === 'TEST',
+                'bg-green-600 text-white': environment.envName === 'PROD'
+              }"
+            >
+              {{ environment.envName }}
+            </span>
+          </div>
+          <div class="text-sm">
+            <span class="font-medium">Last Updated:</span> {{ environment.lastUpdated }}
+          </div>
+          <div class="text-sm">
+            <span class="font-medium">Server Status:</span>
+            <span class="ml-1 text-green-400">●</span> {{ environment.serverStatus }}
+          </div>
+        </div>
+      </div>
+    </div>
+ <!-- hello world -->
+    <div class="border-t border-slate-700 mt-8 pt-6 flex flex-col sm:flex-row justify-between items-center">
+      <div class="text-sm">
+        © {{ currentYear }} InventoryPro Enterprise Management System. All rights reserved.
+      </div>
+      <div class="text-xs text-slate-400 mt-2 sm:mt-0">
+        Powered by secure cloud infrastructure
+      </div>
+    </div>
+  </div>
+</footer>
